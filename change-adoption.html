@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Change Adoption | Work Smarter Hub</title>
+  <style>
+    :root{
+      --primary:#2D535A;
+      --secondary:#276362;
+      --accent:#72ACA7;
+      --light:#95BBC1;
+      --cream:#D6D4C7;
+      --copper:#964734;
+      --background:#F4F7F6;
+      --card:#FFFFFF;
+      --text:#24343A;
+      --muted:#5F7378;
+      --line:#DCE7E8;
+      --soft:#DCEBEB;
+      --soft2:#D7EFEC;
+      --soft3:#F2E2DD;
+      --shadow:0 10px 24px rgba(45,83,90,.10);
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Arial,sans-serif;
+      background:linear-gradient(180deg,#F7FAF9 0%, var(--background) 100%);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    header{
+      background:radial-gradient(circle at top right, rgba(114,172,167,.35), transparent 38%), var(--primary);
+      color:white;
+      padding:34px 24px 44px;
+    }
+    main{max-width:1280px;margin:auto;padding:24px}
+    h1{font-size:clamp(2.25rem,4.4vw,4rem);margin:12px 0 10px;line-height:1.05;letter-spacing:-.035em}
+    h2{color:var(--primary);margin:34px 0 14px;font-size:1.75rem;letter-spacing:-.02em}
+    h3{margin:0 0 8px;color:var(--primary);font-size:1.15rem}
+    p{margin-top:0}
+    small{color:var(--muted)}
+
+    .top-buttons{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+    .nav-btn,button{
+      background:var(--secondary);
+      color:white;
+      border:none;
+      border-radius:12px;
+      padding:12px 20px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:15.5px;
+      transition:.25s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      min-width:210px;
+      min-height:46px;
+      box-shadow:0 4px 10px rgba(0,0,0,.08);
+    }
+    .nav-btn:hover, button:hover{background:var(--primary);transform:translateY(-1px)}
+    .nav-btn.active{background:var(--accent);color:#06353A;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+    .nav-btn.copper{background:var(--copper)}
+    .nav-btn.copper:hover{background:#7d3c2d}
+.nav-btn.qrg{background:#95BBC1;color:#06353A;}
+.nav-btn.qrg:hover{background:#72ACA7;color:#06353A;}
+.nav-btn.qrg.active{background:#D6D4C7;color:#2D535A;box-shadow:inset 0 0 0 2px rgba(45,83,90,.35);}
+
+    .eyebrow{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#EAF6F5;border-radius:999px;padding:7px 12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem}
+    .subtitle{font-size:1.16rem;max-width:940px;margin:0;color:#EAF6F5}
+    .tagline{display:inline-block;margin-top:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);border-radius:999px;padding:10px 16px;font-weight:800;color:white}
+
+    .section{margin-top:34px}
+    .section h2{margin-top:0}
+    .sectionIntro{color:var(--muted);max-width:940px;margin-bottom:18px}
+    .card{background:var(--card);padding:24px;margin-bottom:20px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+    .card.featured{border-left:7px solid var(--copper)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card.third{grid-column:span 4}.card.half{grid-column:span 6}.card.full{grid-column:1/-1}
+    .pill{display:inline-flex;padding:6px 12px;border-radius:999px;font-size:.8rem;font-weight:800;background:var(--soft);color:var(--secondary);margin-bottom:12px}
+    .pill.green{background:var(--soft2);color:var(--secondary)}
+    .pill.orange{background:var(--soft3);color:var(--copper)}
+    .pill.dark{background:#E8F0F1;color:var(--primary)}
+    .pill.red{background:#F2E2DD;color:var(--copper)}
+
+    .flow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+    .flow span{background:var(--secondary);color:white;border-radius:12px;padding:11px 13px;font-weight:800}
+    .arrow{color:var(--secondary);font-weight:900}
+
+    .adkar{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px}
+    .adkar .step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(45,83,90,.06);min-height:190px}
+    .letter{display:inline-flex;width:42px;height:42px;border-radius:50%;align-items:center;justify-content:center;background:var(--secondary);color:white;font-weight:900;font-size:1.2rem;margin-bottom:10px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+    .adkar .step:nth-child(5) .letter{background:var(--copper)}
+
+    .matrix{width:100%;border-collapse:collapse;background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(45,83,90,.06);border:1px solid var(--line)}
+    th,td{padding:14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+    th{background:var(--primary);color:white;font-weight:800}
+    tr:last-child td{border-bottom:none}
+
+    details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 2px 8px rgba(45,83,90,.06);margin-bottom:12px}
+    summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:850;color:var(--primary);display:flex;justify-content:space-between;align-items:center;gap:10px}
+    summary::-webkit-details-marker{display:none}
+    summary::after{content:"+";font-size:1.5rem;color:var(--secondary)}
+    details[open] summary::after{content:"−"}
+    .details-inner{padding:0 20px 20px;color:var(--text)}
+    .prompt{background:#0F3036;color:#F4FBFA;border-radius:14px;padding:18px;margin:14px 0;position:relative;overflow:auto;border-left:6px solid var(--copper)}
+    pre{white-space:pre-wrap;margin:0;font-family:"Consolas","Courier New",monospace;font-size:.92rem}
+    .copy{margin-top:10px;background:var(--copper);min-width:150px}
+    .copy:hover{background:#7d3c2d}
+
+    .note{background:#FBF6F4;border-left:6px solid var(--copper);padding:16px 18px;border-radius:12px;color:#3B4245;margin:18px 0}
+    .footer{margin-top:34px;padding:24px;border-radius:var(--radius);background:var(--primary);color:#F4FBFA;box-shadow:var(--shadow)}
+    .footer small{color:#D8EAEA}
+
+    @media(max-width:1100px){.adkar{grid-template-columns:1fr 1fr}.card.third,.card.half{grid-column:1/-1}}
+    @media(max-width:640px){header{padding:24px 18px 34px}main{padding:18px}.nav-btn,button{width:100%;min-width:0}.adkar{grid-template-columns:1fr}.flow span{width:100%}.arrow{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-buttons" aria-label="Primary navigation">
+      <a class="nav-btn" href="index.html">Home</a>
+      <a class="nav-btn" href="learning-experience-design.html">Learning Design</a>
+      <a class="nav-btn active" href="change-adoption.html">Change Adoption</a>
+      <a class="nav-btn" href="idea-space.html">Idea Space</a>
+      <a class="nav-btn" href="executive-coaching-final.html">Executive Coaching</a>
+      <a class="nav-btn copper" href="prompt-library.html">Prompt Library</a>
+      <a class="nav-btn qrg" href="qrg.html">QRG</a>
+    </div>
+    <span class="eyebrow">Work Smarter Hub</span>
+    <h1>Change Adoption</h1>
+    <p class="subtitle">A practical playbook for moving from awareness to sustained behaviour: diagnose barriers, design interventions, support AI adoption and measure whether work actually changed.</p>
+    <div class="tagline">Adoption is not attendance. Adoption is behaviour change.</div>
+  </header>
+
+  <main>
+    <section class="card featured">
+      <span class="pill orange">Betty Lens</span>
+      <h2 style="margin-top:0">Change adoption starts with work, not the tool</h2>
+      <p>Successful transformation is not measured by whether people attended training or tried a tool once. It is measured by whether people understand the change, choose to engage, build capability, apply the new behaviour in real work and sustain the behaviour over time.</p>
+      <div class="flow" aria-label="Change adoption workflow">
+        <span>Business Goal</span><b class="arrow">→</b>
+        <span>Capability Gap</span><b class="arrow">→</b>
+        <span>Adoption Barrier</span><b class="arrow">→</b>
+        <span>Behaviour Change</span><b class="arrow">→</b>
+        <span>Intervention</span><b class="arrow">→</b>
+        <span>Measurement</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>1. ADKAR: the individual change backbone</h2>
+      <p class="sectionIntro">Use ADKAR to diagnose where adoption is stuck. Each stage represents an outcome a person needs to move through change successfully.</p>
+      <div class="adkar">
+        <div class="step"><div class="letter">A</div><h3>Awareness</h3><p>Does the person understand why the change is needed?</p><strong>Design response:</strong><br>Case for change, leader message, impact story.</div>
+        <div class="step"><div class="letter">D</div><h3>Desire</h3><p>Does the person want to participate and support the change?</p><strong>Design response:</strong><br>WIIFM, manager support, resistance conversations.</div>
+        <div class="step"><div class="letter">K</div><h3>Knowledge</h3><p>Does the person know how to change?</p><strong>Design response:</strong><br>Role-based learning, demos, examples, job aids.</div>
+        <div class="step"><div class="letter">A</div><h3>Ability</h3><p>Can the person apply the new skill or behaviour in real work?</p><strong>Design response:</strong><br>Practice, coaching, workflow support, feedback.</div>
+        <div class="step"><div class="letter">R</div><h3>Reinforcement</h3><p>Is the behaviour being sustained?</p><strong>Design response:</strong><br>Nudges, recognition, metrics, manager check-ins.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>2. AI adoption barriers to diagnose</h2>
+      <p class="sectionIntro">AI adoption is often blocked by friction, trust, risk, relevance, habit and confidence. The design response should be smaller, clearer and closer to the workflow than a generic training programme.</p>
+      <div class="grid">
+        <div class="card third"><span class="pill red">Friction</span><h3>“I don't know where to start.”</h3><p>Support with prompt starters, guided examples and simple first-use pathways.</p></div>
+        <div class="card third"><span class="pill orange">Trust</span><h3>“What if it gives the wrong answer?”</h3><p>Support with validation checklists, quality gates and human-review guidance.</p></div>
+        <div class="card third"><span class="pill red">Risk</span><h3>“Will I expose sensitive data?”</h3><p>Support with responsible-use reminders, data decision trees and safe-use examples.</p></div>
+        <div class="card third"><span class="pill green">Relevance</span><h3>“How does this help my job?”</h3><p>Support with role-based use cases and workflow examples.</p></div>
+        <div class="card third"><span class="pill orange">Habit</span><h3>“I already have a way of doing this.”</h3><p>Support with nudges, quick wins and manager reinforcement.</p></div>
+        <div class="card third"><span class="pill dark">Confidence</span><h3>“The AI experts know this. I don't.”</h3><p>Support with safe practice, peer sharing, champions and confidence-building sessions.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3. Adoption intervention menu</h2>
+      <p class="sectionIntro">Use this as a quick diagnostic table: identify the barrier, choose the smallest useful intervention, and define what evidence would show progress.</p>
+      <table class="matrix">
+        <thead><tr><th>Barrier</th><th>Smallest useful intervention</th><th>Evidence to look for</th><th>Human owner</th></tr></thead>
+        <tbody>
+          <tr><td>Low awareness</td><td>Leader narrative and role-specific “why now” message.</td><td>People can explain the change in their own words.</td><td>Sponsor / Change lead</td></tr>
+          <tr><td>Low desire</td><td>WIIFM stories, listening sessions and resistance mapping.</td><td>People can name a reason to try the new way.</td><td>Manager / Change champion</td></tr>
+          <tr><td>Low knowledge</td><td>Role-based microlearning, examples and job aids.</td><td>People know what to do, when to do it and what not to do.</td><td>L&D / SME</td></tr>
+          <tr><td>Low ability</td><td>Practice labs, coaching, scenario activities and feedback.</td><td>People can complete the task in real workflow conditions.</td><td>Manager / Coach / SME</td></tr>
+          <tr><td>Weak reinforcement</td><td>Manager check-ins, nudges, recognition and dashboard review.</td><td>People continue the behaviour after the initial launch.</td><td>Leader / Manager</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>4. Transformation considerations</h2>
+      <div class="grid">
+        <div class="card half"><span class="pill">Workflow integration</span><h3>Move from “learn then work” to “support while working”</h3><p>Embed prompts, decision trees, checklists, examples and reminders into the moment of need.</p></div>
+        <div class="card half"><span class="pill green">Decision scaffolding</span><h3>Help people decide when and how to use AI</h3><p>Clarify which tasks are appropriate for AI, what data is safe, what risks to check and who owns the final decision.</p></div>
+        <div class="card half"><span class="pill orange">Manager reinforcement</span><h3>Managers convert training into behaviour</h3><p>Give managers talking points, observation guides, check-in questions and reinforcement prompts.</p></div>
+        <div class="card half"><span class="pill red">Responsible adoption</span><h3>Speed must not outrun judgement</h3><p>Build responsible-use guardrails, review expectations and escalation points into the adoption journey.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>5. Measurement model: beyond usage</h2>
+      <p class="sectionIntro">Adoption is not only “Are people using it?” A stronger question is: “Has the behaviour changed, and is the change creating value?”</p>
+      <table class="matrix">
+        <thead><tr><th>Dimension</th><th>Key question</th><th>Example indicators</th></tr></thead>
+        <tbody>
+          <tr><td>Access</td><td>Can people use the tool or new way of working?</td><td>Access readiness, permission issues, enablement gaps.</td></tr>
+          <tr><td>Awareness</td><td>Do people understand why the change matters?</td><td>Pulse responses, manager feedback, common questions.</td></tr>
+          <tr><td>First use</td><td>Have people tried the new behaviour once?</td><td>First prompt, first workflow use, first completed scenario.</td></tr>
+          <tr><td>Repeat use</td><td>Are people coming back?</td><td>Weekly/monthly repeat behaviour, return users, sustained participation.</td></tr>
+          <tr><td>Workflow integration</td><td>Has work changed?</td><td>Before/after workflow evidence, use in meetings, drafts, analysis or review points.</td></tr>
+          <tr><td>Confidence and judgement</td><td>Can people use the new approach responsibly?</td><td>Confidence ratings, validation behaviour, escalation decisions.</td></tr>
+          <tr><td>Value realization</td><td>Is the change helping the business?</td><td>Reduced friction, quality improvement, cycle-time reduction, better decision support.</td></tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>Useful adoption test:</strong> If the tool or new way of working disappeared tomorrow, would people complain because it had become genuinely useful?</div>
+    </section>
+
+    <section class="section">
+      <h2>Prompt cards: click to expand</h2>
+      <p class="sectionIntro">These prompts are built to help diagnose change barriers, design AI adoption support, activate champions and measure transformation outcomes.</p>
+
+      <details open>
+        <summary>Diagnose change adoption barriers using ADKAR</summary>
+        <div class="details-inner">
+          <div class="prompt"><pre id="p1">Act as a change adoption consultant using ADKAR.
+
+Situation:
+[Insert change or transformation context]
+
+Diagnose barriers across:
+1. Awareness - do people understand why the change is needed?
+2. Desire - do people want to participate?
+3. Knowledge - do people know how to change?
+4. Ability - can people apply the change in real work?
+5. Reinforcement - is the new behaviour being sustained?
+
+For each ADKAR stage, provide:
+- Evidence to look for
+- Likely barrier
+- Recommended intervention
+- Communication message
+- Learning or performance support
+- Metric to track</pre></div>
+          <button class="copy" onclick="copyPrompt('p1', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Design an AI adoption intervention</summary>
+        <div class="details-inner">
+          <div class="prompt"><pre id="p2">Act as an AI adoption and workforce transformation strategist.
+
+Context:
+[Insert team, tool, workflow or behaviour]
+
+Analyze:
+- Business goal
+- Current behaviour
+- Target behaviour
+- Capability gaps
+- Confidence barriers
+- Workflow friction
+- Trust or risk concerns
+- Manager or leadership reinforcement gaps
+
+Recommend the smallest useful intervention first.
+Prioritize embedded workflow support before recommending a full training programme.</pre></div>
+          <button class="copy" onclick="copyPrompt('p2', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Create a change champion activation plan</summary>
+        <div class="details-inner">
+          <div class="prompt"><pre id="p3">Act as a change network strategist.
+
+Create a change champion activation plan for:
+Change initiative: [Insert initiative]
+Audience: [Insert audience]
+Business goal: [Insert goal]
+
+Include:
+1. Champion role description
+2. Selection criteria
+3. Onboarding plan
+4. Monthly activity calendar
+5. Sample meeting agenda
+6. Feedback capture approach
+7. Escalation path
+8. Recognition approach
+9. Measures of champion effectiveness</pre></div>
+          <button class="copy" onclick="copyPrompt('p3', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Build an adoption measurement dashboard</summary>
+        <div class="details-inner">
+          <div class="prompt"><pre id="p4">Act as a learning measurement and change adoption strategist.
+
+Create an adoption measurement framework for:
+Initiative: [Insert initiative]
+Audience: [Insert audience]
+Target behaviour: [Insert behaviour]
+
+Include metrics across:
+1. Access readiness
+2. Awareness
+3. Engagement
+4. First use
+5. Repeat use
+6. Skill and confidence
+7. Workflow integration
+8. Responsible-use behaviour
+9. Manager reinforcement
+10. Value realization
+
+Separate leading indicators from lagging indicators.
+Create a simple leadership dashboard narrative.</pre></div>
+          <button class="copy" onclick="copyPrompt('p4', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Turn a transformation brief into behaviour change</summary>
+        <div class="details-inner">
+          <div class="prompt"><pre id="p5">Act as a workforce transformation consultant.
+
+Review the transformation brief below and translate it into behaviour change requirements.
+
+Create:
+1. What is changing
+2. Who is impacted
+3. What people must start doing
+4. What people must stop doing
+5. What people must do differently
+6. Risks and resistance points
+7. Capability shifts required
+8. Learning and adoption supports needed
+9. Manager reinforcement actions
+10. Measurement approach
+
+Transformation brief:
+[Paste brief here]</pre></div>
+          <button class="copy" onclick="copyPrompt('p5', this)">Copy Prompt</button>
+        </div>
+      </details>
+    </section>
+
+    <footer class="footer">
+      <strong>Design principle:</strong> Change adoption is not communication plus training. It is a behaviour system: awareness, desire, knowledge, ability, reinforcement, workflow support, manager reinforcement and measurement.
+      <br><br><small>Built for Betty's Work Smarter Hub using ADKAR, AI adoption barriers, workforce transformation considerations and human-owned judgement principles.</small>
+    </footer>
+  </main>
+
+  <script>
+    function copyPrompt(id, btn){
+      const text=document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(()=>{
+        const old=btn.innerText;
+        btn.innerText='Copied!';
+        setTimeout(()=>btn.innerText=old,1200);
+      });
+    }
+  </script>
+</body>
+</html>

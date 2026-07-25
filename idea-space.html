@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Idea Space | Work Smarter Hub</title>
+  <style>
+    :root{
+      --primary:#2D535A;
+      --secondary:#276362;
+      --accent:#72ACA7;
+      --light:#95BBC1;
+      --cream:#D6D4C7;
+      --copper:#964734;
+      --background:#F4F7F6;
+      --card:#FFFFFF;
+      --text:#24343A;
+      --muted:#5F7378;
+      --line:#DCE7E8;
+      --soft:#DCEBEB;
+      --soft2:#D7EFEC;
+      --soft3:#F2E2DD;
+      --shadow:0 10px 24px rgba(45,83,90,.10);
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Arial,sans-serif;
+      background:linear-gradient(180deg,#F7FAF9 0%, var(--background) 100%);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    header{
+      background:radial-gradient(circle at top right, rgba(114,172,167,.35), transparent 38%), var(--primary);
+      color:white;
+      padding:34px 24px 44px;
+    }
+    main{max-width:1280px;margin:auto;padding:24px}
+    h1{font-size:clamp(2.25rem,4.4vw,4rem);margin:12px 0 10px;line-height:1.05;letter-spacing:-.035em}
+    h2{color:var(--primary);margin:34px 0 14px;font-size:1.75rem;letter-spacing:-.02em}
+    h3{margin:0 0 8px;color:var(--primary);font-size:1.15rem}
+    p{margin-top:0}
+    small{color:var(--muted)}
+
+    .top-buttons{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+    .nav-btn,button{
+      background:var(--secondary);
+      color:white;
+      border:none;
+      border-radius:12px;
+      padding:12px 20px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:15.5px;
+      transition:.25s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      min-width:210px;
+      min-height:46px;
+      box-shadow:0 4px 10px rgba(0,0,0,.08);
+    }
+    .nav-btn:hover, button:hover{background:var(--primary);transform:translateY(-1px)}
+    .nav-btn.active{background:var(--accent);color:#06353A;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+    .nav-btn.copper{background:var(--copper)}
+    .nav-btn.copper:hover{background:#7d3c2d}
+.nav-btn.qrg{background:#95BBC1;color:#06353A;}
+.nav-btn.qrg:hover{background:#72ACA7;color:#06353A;}
+.nav-btn.qrg.active{background:#D6D4C7;color:#2D535A;box-shadow:inset 0 0 0 2px rgba(45,83,90,.35);}
+
+    .eyebrow{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#EAF6F5;border-radius:999px;padding:7px 12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem}
+    .subtitle{font-size:1.16rem;max-width:940px;margin:0;color:#EAF6F5}
+    .tagline{display:inline-block;margin-top:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);border-radius:999px;padding:10px 16px;font-weight:800;color:white}
+
+    .section{margin-top:34px}
+    .section h2{margin-top:0}
+    .sectionIntro{color:var(--muted);max-width:940px;margin-bottom:18px}
+    .card{background:var(--card);padding:24px;margin-bottom:20px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+    .card.featured{border-left:7px solid var(--copper)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card.third{grid-column:span 4}.card.half{grid-column:span 6}.card.full{grid-column:1/-1}
+    .pill{display:inline-flex;padding:6px 12px;border-radius:999px;font-size:.8rem;font-weight:800;background:var(--soft);color:var(--secondary);margin-bottom:12px}
+    .pill.green{background:var(--soft2);color:var(--secondary)}
+    .pill.orange{background:var(--soft3);color:var(--copper)}
+    .pill.dark{background:#E8F0F1;color:var(--primary)}
+    .pill.copper{background:var(--soft3);color:var(--copper)}
+
+    .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;align-items:stretch}
+    .quote-card{background:#0F3036;color:#F4FBFA;border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;justify-content:center;border-left:7px solid var(--copper);box-shadow:var(--shadow)}
+    .quote-card strong{font-size:1.65rem;line-height:1.12;display:block;margin-bottom:12px}
+    .flow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+    .flow span{background:var(--secondary);color:white;border-radius:12px;padding:11px 13px;font-weight:800}
+    .arrow{color:var(--secondary);font-weight:900}
+
+    .model-flow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:14px}
+    .tile{background:#FBFDFD;border:1px solid var(--line);border-top:6px solid var(--secondary);border-radius:14px;padding:15px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 2px 8px rgba(45,83,90,.04)}
+    .tile:nth-child(3),.tile:nth-child(6){border-top-color:var(--copper)}
+    .tile strong{color:var(--primary)}
+
+    .split{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    ul.clean{padding-left:20px;margin:8px 0 0}
+    ul.clean li{margin:8px 0}
+
+    .question-wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+    .question{background:#fff;border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(45,83,90,.06);font-weight:750;color:var(--primary)}
+    .question:nth-child(2n){border-left-color:var(--copper)}
+
+    details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 2px 8px rgba(45,83,90,.06);margin-bottom:12px}
+    summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:850;color:var(--primary);display:flex;justify-content:space-between;align-items:center;gap:10px}
+    summary::-webkit-details-marker{display:none}
+    summary::after{content:"+";font-size:1.5rem;color:var(--secondary)}
+    details[open] summary::after{content:"−"}
+    .details-inner{padding:0 20px 20px;color:var(--text)}
+    .prompt{background:#0F3036;color:#F4FBFA;border-radius:14px;padding:18px;margin:14px 0;position:relative;overflow:auto;border-left:6px solid var(--copper)}
+    pre{white-space:pre-wrap;margin:0;font-family:"Consolas","Courier New",monospace;font-size:.92rem}
+    .copy{margin-top:10px;background:var(--copper);min-width:150px}
+    .copy:hover{background:#7d3c2d}
+
+    .note{background:#FBF6F4;border-left:6px solid var(--copper);padding:16px 18px;border-radius:12px;color:#3B4245;margin:18px 0}
+    .footer{margin-top:34px;padding:24px;border-radius:var(--radius);background:var(--primary);color:#F4FBFA;box-shadow:var(--shadow)}
+    .footer small{color:#D8EAEA}
+
+    @media(max-width:1100px){.hero-grid,.split{grid-template-columns:1fr}.model-flow{grid-template-columns:1fr 1fr 1fr}.card.third,.card.half{grid-column:1/-1}}
+    @media(max-width:640px){header{padding:24px 18px 34px}main{padding:18px}.nav-btn,button{width:100%;min-width:0}.model-flow{grid-template-columns:1fr}.flow span{width:100%}.arrow{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-buttons" aria-label="Primary navigation">
+      <a class="nav-btn" href="index.html">Home</a>
+      <a class="nav-btn" href="learning-experience-design.html">Learning Design</a>
+      <a class="nav-btn" href="change-adoption.html">Change Adoption</a>
+      <a class="nav-btn active" href="idea-space.html">Idea Space</a>
+      <a class="nav-btn" href="executive-coaching-final.html">Executive Coaching</a>
+      <a class="nav-btn copper" href="prompt-library.html">Prompt Library</a>
+      <a class="nav-btn qrg" href="qrg.html">QRG</a>
+    </div>
+    <span class="eyebrow">Work Smarter Hub</span>
+    <h1>Idea Space</h1>
+    <p class="subtitle">Models, frameworks, observations and questions about learning, change, capability, AI and the future of work.</p>
+    <div class="tagline">Technology accelerates work. Humans create meaning.</div>
+  </header>
+
+  <main>
+    <section class="card featured">
+      <div class="hero-grid">
+        <div>
+          <span class="pill orange">Thinking Studio</span>
+          <h2 style="margin-top:0">How Betty thinks about work, learning and transformation</h2>
+          <p>This page is not a resource library. It is a thinking space — a place to capture recurring ideas, questions and models that sit behind the Work Smarter Hub.</p>
+          <p>The core pattern: move from scattered knowledge to structured capability, while using AI to accelerate repeatable parts and keeping judgment, strategy, validation and meaning with humans.</p>
+          <div class="flow" aria-label="Idea Space flow">
+            <span>Observe</span><b class="arrow">→</b>
+            <span>Diagnose</span><b class="arrow">→</b>
+            <span>Model</span><b class="arrow">→</b>
+            <span>Design</span><b class="arrow">→</b>
+            <span>Test</span><b class="arrow">→</b>
+            <span>Refine</span>
+          </div>
+        </div>
+        <div class="quote-card">
+          <strong>Knowledge is not capability.</strong>
+          <p>Capability appears when people can apply knowledge, make sound decisions, and perform the work with confidence and support.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>1. Big Ideas</h2>
+      <p class="sectionIntro">These are the ideas that connect the Learning Design, Change Adoption, Executive Coaching and Prompt Library pages into one larger capability story.</p>
+      <div class="grid">
+        <div class="card third"><span class="pill copper">Judgment Line</span><h3>Knowledge ≠ Judgment</h3><p>AI can provide information, summaries and options. Humans still own interpretation, trade-offs, ethics, context and final judgment.</p></div>
+        <div class="card third"><span class="pill green">Not Content Conversion</span><h3>Learning starts with performance</h3><p>SME content is only the input. Learning design begins when we ask what people need to do, decide, practice and sustain.</p></div>
+        <div class="card third"><span class="pill orange">Capability First</span><h3>Start with “do differently”</h3><p>The stronger design question is not “What content do we have?” but “What must people do differently after this experience?”</p></div>
+        <div class="card third"><span class="pill dark">Change Is Human</span><h3>Adoption is not attendance</h3><p>People need awareness, desire, knowledge, ability and reinforcement before transformation becomes real behaviour.</p></div>
+        <div class="card third"><span class="pill green">AI + Human</span><h3>AI supports; humans decide</h3><p>AI can extract, compare, draft and structure. Humans diagnose, prioritize, validate, coach and approve.</p></div>
+        <div class="card third"><span class="pill copper">Future Workforce</span><h3>Speed is not wisdom</h3><p>As AI makes information faster, judgment, meaning, reflection and discernment become more valuable.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>2. Betty's Models & Frameworks</h2>
+      <div class="card featured">
+        <span class="pill copper">Signature model</span>
+        <h3>Knowledge → Capability Factory</h3>
+        <p>A simple way to explain the shift from information to performance.</p>
+        <div class="model-flow">
+          <div class="tile"><strong>Knowledge</strong><span>SME input, documents, context, examples.</span></div>
+          <div class="tile"><strong>Structure</strong><span>Patterns, gaps, audience relevance.</span></div>
+          <div class="tile"><strong>Learning</strong><span>Objectives, activities, practice.</span></div>
+          <div class="tile"><strong>Support</strong><span>Job aids, prompts, checklists, nudges.</span></div>
+          <div class="tile"><strong>Performance</strong><span>Application in real work.</span></div>
+          <div class="tile"><strong>Capability</strong><span>Sustained confident behaviour.</span></div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card half"><span class="pill green">Workflow</span><h3>AI-Assisted Change Knowledge-to-Performance Workflow</h3><p>Converts technical and operational change inputs into review-ready enablement outputs such as impact summaries, job aids, FAQs, readiness checklists and SME questions.</p><div class="flow"><span>Inputs</span><b class="arrow">→</b><span>AI Extraction</span><b class="arrow">→</b><span>Impact Starter</span><b class="arrow">→</b><span>Human Review</span><b class="arrow">→</b><span>Enablement Pack</span></div></div>
+        <div class="card half"><span class="pill orange">Workflow</span><h3>AI-Assisted Learning Design Readiness Workflow</h3><p>Converts varied SME and business inputs into structured, review-ready learning outputs while keeping learning strategy and final quality decisions human-owned.</p><div class="flow"><span>SME Input</span><b class="arrow">→</b><span>AI Structuring</span><b class="arrow">→</b><span>Objectives</span><b class="arrow">→</b><span>Activities</span><b class="arrow">→</b><span>Validation</span></div></div>
+      </div>
+
+      <div class="card">
+        <span class="pill dark">Learner lens</span>
+        <h3>Learner Profile & Design Support Simulator</h3>
+        <p>For BAU learning, use learning-focused profiles rather than adoption personas. The purpose is to identify learning barriers, performance/application shifts and the right design supports.</p>
+        <div class="grid">
+          <div class="card third"><h3>Concept Builder</h3><p>Needs clear explanations, glossary, examples and visual summaries.</p></div>
+          <div class="card third"><h3>Application Learner</h3><p>Needs scenarios, practice tasks, worked examples and job aids.</p></div>
+          <div class="card third"><h3>Decision Maker</h3><p>Needs cases, trade-offs, decision trees and feedback.</p></div>
+          <div class="card third"><h3>Confidence Builder</h3><p>Needs guided practice, reinforcement, checklists and low-risk activities.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3. Human + AI Operating Principle</h2>
+      <p class="sectionIntro">The strongest AI workflows preserve human judgment while reducing avoidable manual effort.</p>
+      <div class="split">
+        <div class="panel"><span class="pill green">AI should help with</span><ul class="clean"><li>Extracting key points from source material</li><li>Comparing old and new processes</li><li>Structuring scattered inputs</li><li>Drafting first-pass outputs</li><li>Identifying gaps, inconsistencies and questions</li><li>Creating review-ready starting points</li></ul></div>
+        <div class="panel"><span class="pill copper">Humans should own</span><ul class="clean"><li>Diagnosis and problem framing</li><li>Change impact and adoption risk analysis</li><li>Learning strategy and learner fit</li><li>SME accuracy validation</li><li>Accessibility, tone and cognitive load</li><li>Final approval and judgment</li></ul></div>
+      </div>
+      <div class="note"><strong>Betty Lens:</strong> The most valuable AI workflows are not replacement workflows. They are judgment-preserving workflows that improve review readiness.</div>
+    </section>
+
+    <section class="section">
+      <h2>4. Future Workforce Questions</h2>
+      <p class="sectionIntro">These are open questions worth exploring as AI, learning habits and workplace expectations change.</p>
+      <div class="question-wall">
+        <div class="question">What happens to learning when people are shaped by reels, shorts and constant scrolling?</div>
+        <div class="question">Does AI make us better thinkers, or just faster producers?</div>
+        <div class="question">What skills become more valuable because AI exists?</div>
+        <div class="question">How do organizations build judgment, not just knowledge?</div>
+        <div class="question">What does meaningful work look like when routine work is automated?</div>
+        <div class="question">Will future L&D professionals design courses or capability systems?</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>5. Articles & Reflections</h2>
+      <details open><summary>The Judgment Line</summary><div class="details-inner"><p>Explore the difference between knowing, deciding and acting wisely. This can become a signature article about human judgment in an AI-rich world.</p></div></details>
+      <details><summary>Learning Is Not Content Conversion</summary><div class="details-inner"><p>A reflection on why SME content needs diagnosis, learner relevance, practice, performance support and validation before it becomes learning.</p></div></details>
+      <details><summary>Why Adoption Is Not Training</summary><div class="details-inner"><p>A perspective on why communication and courses are not enough unless people have desire, ability, reinforcement and support in the workflow.</p></div></details>
+      <details><summary>The Capability Architect</summary><div class="details-inner"><p>A future-of-work article about the shift from course creation to capability system design.</p></div></details>
+      <details><summary>AI Is a Tool, Not a Strategy</summary><div class="details-inner"><p>A practical argument for starting with business outcomes, behaviour change and human judgment before selecting AI use cases.</p></div></details>
+    </section>
+
+    <section class="section">
+      <h2>6. Experiments & Ideas in Progress</h2>
+      <div class="grid">
+        <div class="card third"><span class="pill copper">Experiment</span><h3>Change Knowledge-to-Performance Workflow</h3><p>Exploring how AI can convert change inputs into review-ready performance support.</p></div>
+        <div class="card third"><span class="pill green">Experiment</span><h3>Learning Design Readiness Workflow</h3><p>Exploring how AI can turn SME material into first-pass learning design outputs.</p></div>
+        <div class="card third"><span class="pill orange">Experiment</span><h3>Learner Profile Simulator</h3><p>Exploring how AI can help identify learner readiness, barriers and support needs.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Prompt cards: click to expand</h2>
+      <p class="sectionIntro">Use these prompts when a rough idea needs structure, a model, or a clearer thought leadership angle.</p>
+
+      <details open>
+        <summary>Turn an idea into a thought leadership outline</summary>
+        <div class="details-inner"><div class="prompt"><pre id="p1">Act as a thought partner for a learning, change and workforce transformation leader.
+
+Idea:
+[Insert idea]
+
+Create:
+1. Core argument
+2. Why this matters now
+3. Personal insight or observation
+4. Practical workplace example
+5. Framework or model
+6. Tensions or counterpoints
+7. Suggested article structure
+8. Strong opening paragraph
+9. LinkedIn post version
+10. Questions for reflection</pre></div><button class="copy" onclick="copyPrompt('p1', this)">Copy Prompt</button></div>
+      </details>
+
+      <details>
+        <summary>Convert scattered notes into a Betty-style model</summary>
+        <div class="details-inner"><div class="prompt"><pre id="p2">Act as a systems thinker and capability design partner.
+
+Review the notes below and identify the underlying pattern.
+Create:
+- The central problem
+- The repeated pattern
+- A simple model name
+- A 5-step or 6-step framework
+- What AI can support
+- What humans must own
+- A short explanation for senior leaders
+- A visual flow in text format
+
+Notes:
+[Paste notes here]</pre></div><button class="copy" onclick="copyPrompt('p2', this)">Copy Prompt</button></div>
+      </details>
+
+      <details>
+        <summary>Create future workforce reflection questions</summary>
+        <div class="details-inner"><div class="prompt"><pre id="p3">Act as a future-of-work researcher and reflective writing coach.
+
+Topic:
+[Insert topic]
+
+Generate 20 thoughtful reflection questions about:
+- Human development
+- AI adoption
+- Learning habits
+- Workplace meaning
+- Decision-making quality
+- Capability building
+- Change readiness
+
+Make the questions suitable for a LinkedIn article, leadership discussion or personal research journal.</pre></div><button class="copy" onclick="copyPrompt('p3', this)">Copy Prompt</button></div>
+      </details>
+    </section>
+
+    <footer class="footer">
+      <strong>Questions I keep returning to:</strong><br>
+      How do people learn? How do people change? How do organizations build capability? What should remain human in an AI world?
+      <br><br><small>Part of Betty's Work Smarter Hub. Designed as a thinking studio for capability, change, learning and AI-enabled work.</small>
+    </footer>
+  </main>
+
+  <script>
+    function copyPrompt(id, btn){
+      const text=document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(()=>{
+        const old=btn.innerText;
+        btn.innerText='Copied!';
+        setTimeout(()=>btn.innerText=old,1200);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Executive Coaching | Work Smarter Hub</title>
+  <style>
+    :root{
+      --primary:#2D535A;
+      --secondary:#276362;
+      --accent:#72ACA7;
+      --light:#95BBC1;
+      --cream:#D6D4C7;
+      --copper:#964734;
+      --background:#F4F7F6;
+      --card:#FFFFFF;
+      --text:#24343A;
+      --muted:#5F7378;
+      --line:#DCE7E8;
+      --soft:#DCEBEB;
+      --soft2:#D7EFEC;
+      --soft3:#F2E2DD;
+      --shadow:0 10px 24px rgba(45,83,90,.10);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Arial,sans-serif;
+      background:linear-gradient(180deg,#F7FAF9 0%, var(--background) 100%);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    header{
+      background:radial-gradient(circle at top right, rgba(114,172,167,.35), transparent 38%), var(--primary);
+      color:white;
+      padding:34px 24px 44px;
+    }
+    main{max-width:1280px;margin:auto;padding:24px}
+    h1{font-size:clamp(2.25rem,4.4vw,4rem);margin:12px 0 10px;line-height:1.05;letter-spacing:-.035em}
+    h2{color:var(--primary);margin:34px 0 14px;font-size:1.75rem;letter-spacing:-.02em}
+    h3{margin:0 0 8px;color:var(--primary);font-size:1.15rem}
+    h4{margin:18px 0 8px;color:var(--secondary)}
+    p{margin-top:0}
+    small{color:var(--muted)}
+
+    .top-buttons{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+    .nav-btn,button{
+      background:var(--secondary);
+      color:white;
+      border:none;
+      border-radius:12px;
+      padding:12px 20px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:15.5px;
+      transition:.25s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      min-width:210px;
+      min-height:46px;
+      box-shadow:0 4px 10px rgba(0,0,0,.08);
+    }
+    .nav-btn:hover, button:hover{background:var(--primary);transform:translateY(-1px)}
+    .nav-btn.active{background:var(--accent);color:#06353A;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+    .nav-btn.copper{background:var(--copper)}
+    .nav-btn.copper:hover{background:#7d3c2d}
+.nav-btn.qrg{background:#95BBC1;color:#06353A;}
+.nav-btn.qrg:hover{background:#72ACA7;color:#06353A;}
+.nav-btn.qrg.active{background:#D6D4C7;color:#2D535A;box-shadow:inset 0 0 0 2px rgba(45,83,90,.35);}
+
+    .eyebrow{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#EAF6F5;border-radius:999px;padding:7px 12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem}
+    .subtitle{font-size:1.16rem;max-width:940px;margin:0;color:#EAF6F5}
+    .tagline{display:inline-block;margin-top:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);border-radius:999px;padding:10px 16px;font-weight:800;color:white}
+
+    .section{margin-top:34px}
+    .section h2{margin-top:0}
+    .sectionIntro{color:var(--muted);max-width:940px;margin-bottom:18px}
+    .card{background:var(--card);padding:24px;margin-bottom:20px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+    .card.featured{border-left:7px solid var(--copper)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card.third{grid-column:span 4}.card.half{grid-column:span 6}.card.full{grid-column:1/-1}
+    .pill{display:inline-flex;padding:6px 12px;border-radius:999px;font-size:.8rem;font-weight:800;background:var(--soft);color:var(--secondary);margin-bottom:12px}
+    .pill.green{background:var(--soft2);color:var(--secondary)}
+    .pill.orange{background:var(--soft3);color:var(--copper)}
+    .pill.dark{background:#E8F0F1;color:var(--primary)}
+    .pill.copper{background:var(--soft3);color:var(--copper)}
+
+    .coaching-flow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+    .coaching-flow span{background:var(--secondary);color:white;border-radius:12px;padding:11px 13px;font-weight:800}
+    .arrow{color:var(--secondary);font-weight:900}
+
+    .frameworks{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+    .visual{padding:22px;border:1px solid var(--line);border-radius:16px;background:#FBFDFD;text-align:center;box-shadow:0 2px 8px rgba(45,83,90,.05)}
+    .wheel{width:230px;height:230px;border-radius:50%;margin:18px auto;position:relative;background:conic-gradient(var(--primary) 0 25%,var(--secondary) 25% 50%,var(--accent) 50% 75%,var(--copper) 75% 100%);box-shadow:0 8px 20px rgba(45,83,90,.15)}
+    .center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:white;color:var(--primary);padding:18px;border-radius:50%;font-weight:900;box-shadow:0 4px 10px rgba(0,0,0,.10)}
+    .journey{display:grid;gap:10px;margin-top:16px}
+    .journey .step{background:var(--secondary);color:white;padding:12px;margin:0;border-radius:10px;font-weight:800}
+    .journey .step:nth-child(3){background:var(--accent);color:#06353A}.journey .step:nth-child(5){background:var(--copper)}
+    .habit-list{display:grid;gap:8px;margin-top:14px}
+    .q{background:#F7FAF9;padding:10px 12px;border:1px solid var(--line);border-radius:10px;text-align:left;color:var(--primary);font-weight:650}
+    .q strong{color:var(--copper)}
+
+    details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 2px 8px rgba(45,83,90,.06);margin-bottom:12px}
+    summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:850;color:var(--primary);display:flex;justify-content:space-between;align-items:center;gap:10px}
+    summary::-webkit-details-marker{display:none}
+    summary::after{content:"+";font-size:1.5rem;color:var(--secondary)}
+    details[open] summary::after{content:"−"}
+    .details-inner{padding:0 20px 20px;color:var(--text)}
+    ul,ol{margin-top:8px} li{margin:7px 0}
+
+    .prompt{background:#0F3036;color:#F4FBFA;border-radius:14px;padding:18px;margin:14px 0;position:relative;overflow:auto;border-left:6px solid var(--copper)}
+    pre{white-space:pre-wrap;margin:0;font-family:"Consolas","Courier New",monospace;font-size:.92rem}
+    .copy{margin-top:10px;background:var(--copper);min-width:150px}
+    .copy:hover{background:#7d3c2d}
+    .note{background:#FBF6F4;border-left:6px solid var(--copper);padding:16px 18px;border-radius:12px;color:#3B4245;margin:18px 0}
+    .footer{margin-top:34px;padding:24px;border-radius:var(--radius);background:var(--primary);color:#F4FBFA;box-shadow:var(--shadow)}
+    .footer small{color:#D8EAEA}
+
+    @media(max-width:1100px){.card.third,.card.half{grid-column:1/-1}}
+    @media(max-width:640px){header{padding:24px 18px 34px}main{padding:18px}.nav-btn,button{width:100%;min-width:0}.coaching-flow span{width:100%}.arrow{display:none}.wheel{width:200px;height:200px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-buttons" aria-label="Primary navigation">
+      <a class="nav-btn" href="index.html">Home</a>
+      <a class="nav-btn" href="learning-experience-design.html">Learning Design</a>
+      <a class="nav-btn" href="change-adoption.html">Change Adoption</a>
+      <a class="nav-btn" href="idea-space.html">Idea Space</a>
+      <a class="nav-btn active" href="executive-coaching-final.html">Executive Coaching</a>
+      <a class="nav-btn copper" href="prompt-library.html">Prompt Library</a>
+      <a class="nav-btn qrg" href="qrg.html">QRG</a>
+    </div>
+    <span class="eyebrow">Work Smarter Hub</span>
+    <h1>Executive Coaching</h1>
+    <p class="subtitle">A reflective toolkit for better questions, clearer decisions and deliberate action using GROW, OSKAR and The Coaching Habit.</p>
+    <div class="tagline">Better questions create better movement.</div>
+  </header>
+
+  <main>
+    <section class="card featured">
+      <span class="pill orange">Coaching Lens</span>
+      <h2 style="margin-top:0">Coaching is not advice-giving</h2>
+      <p>Use this page when the goal is reflection, clarity, ownership and action. The coaching stance is to help the other person think better — not to rush into solving for them.</p>
+      <div class="coaching-flow" aria-label="Coaching conversation flow">
+        <span>Listen</span><b class="arrow">→</b>
+        <span>Clarify</span><b class="arrow">→</b>
+        <span>Explore</span><b class="arrow">→</b>
+        <span>Choose</span><b class="arrow">→</b>
+        <span>Act</span><b class="arrow">→</b>
+        <span>Review</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>1. Coaching Framework Visuals</h2>
+      <p class="sectionIntro">The original page included quick visuals for GROW, OSKAR and The Coaching Habit. This version keeps those frameworks but brings them into the new Work Smarter Hub design system.</p>
+      <div class="frameworks">
+        <div class="visual">
+          <span class="pill">GROW</span>
+          <h3>GROW Wheel</h3>
+          <div class="wheel"><div class="center">GROW</div></div>
+          <p><strong>Goal → Reality → Options → Way Forward</strong></p>
+        </div>
+        <div class="visual">
+          <span class="pill green">OSKAR</span>
+          <h3>OSKAR Journey</h3>
+          <div class="journey">
+            <div class="step">Outcome</div>
+            <div class="step">Scaling</div>
+            <div class="step">Know-How</div>
+            <div class="step">Affirm & Action</div>
+            <div class="step">Review</div>
+          </div>
+        </div>
+        <div class="visual">
+          <span class="pill copper">The Coaching Habit</span>
+          <h3>Seven Questions</h3>
+          <div class="habit-list">
+            <div class="q"><strong>1.</strong> What's on your mind?</div>
+            <div class="q"><strong>2.</strong> And what else?</div>
+            <div class="q"><strong>3.</strong> What's the real challenge here for you?</div>
+            <div class="q"><strong>4.</strong> What do you want?</div>
+            <div class="q"><strong>5.</strong> How can I help?</div>
+            <div class="q"><strong>6.</strong> What are you saying no to?</div>
+            <div class="q"><strong>7.</strong> What was most useful?</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>2. GROW Framework</h2>
+      <details open>
+        <summary>Expand Questions</summary>
+        <div class="details-inner">
+          <h4>Goal</h4>
+          <ul><li>What do you want?</li><li>What does success look like?</li><li>What outcome would make this conversation useful?</li></ul>
+          <h4>Reality</h4>
+          <ul><li>What is happening now?</li><li>What obstacles exist?</li><li>What have you already tried?</li></ul>
+          <h4>Options</h4>
+          <ul><li>What could you do?</li><li>What alternatives exist?</li><li>What would you try if there were fewer constraints?</li></ul>
+          <h4>Way Forward</h4>
+          <ul><li>What action will you take?</li><li>When?</li><li>What support or accountability will help?</li></ul>
+        </div>
+      </details>
+    </section>
+
+    <section class="section">
+      <h2>3. OSKAR Framework</h2>
+      <details open>
+        <summary>Expand Questions</summary>
+        <div class="details-inner">
+          <ul>
+            <li><strong>Outcome:</strong> What would success look like?</li>
+            <li><strong>Scaling:</strong> Where are you today on a scale of 1-10?</li>
+            <li><strong>Know-How:</strong> What strengths can help?</li>
+            <li><strong>Affirm & Action:</strong> What is already working? What small action could move things forward?</li>
+            <li><strong>Review:</strong> What progress have you made? What have you learned?</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
+    <section class="section">
+      <h2>4. The Coaching Habit</h2>
+      <details open>
+        <summary>Expand Framework</summary>
+        <div class="details-inner">
+          <ol>
+            <li>What's on your mind?</li>
+            <li>And what else?</li>
+            <li>What's the real challenge here for you?</li>
+            <li>What do you want?</li>
+            <li>How can I help?</li>
+            <li>If you're saying yes to this, what are you saying no to?</li>
+            <li>What was most useful for you?</li>
+          </ol>
+        </div>
+      </details>
+    </section>
+
+    <section class="section">
+      <h2>5. Coaching Prompt Cards</h2>
+      <p class="sectionIntro">Use these prompts to prepare for coaching conversations, reflect after conversations, or create question sets for specific leadership situations.</p>
+
+      <details open>
+        <summary>Prepare for a coaching conversation</summary>
+        <div class="details-inner">
+          <div class="prompt"><pre id="p1">Act as an executive coaching preparation partner.
+
+Context:
+[Insert coaching context]
+
+Help me prepare by identifying:
+1. The possible coaching objective
+2. Questions I should ask before giving advice
+3. GROW questions I can use
+4. OSKAR questions I can use
+5. Possible blind spots
+6. What I should avoid saying
+7. How to help the person leave with ownership and action</pre></div>
+          <button class="copy" onclick="copyPrompt('p1', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Create reflective questions for decision quality</summary>
+        <div class="details-inner">
+          <div class="prompt"><pre id="p2">Act as a reflective executive coach.
+
+Decision I am considering:
+[Insert decision]
+
+Create coaching questions that help me separate:
+- Facts
+- Assumptions
+- Risks
+- Options
+- Trade-offs
+- Stakeholder impact
+- What should remain human-owned
+
+End with 5 questions that improve judgment before action.</pre></div>
+          <button class="copy" onclick="copyPrompt('p2', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Use The Coaching Habit for a stuck situation</summary>
+        <div class="details-inner">
+          <div class="prompt"><pre id="p3">Act as a coaching conversation designer using The Coaching Habit.
+
+Situation:
+[Insert situation]
+
+Create a question sequence using:
+1. What's on your mind?
+2. And what else?
+3. What's the real challenge here for you?
+4. What do you want?
+5. How can I help?
+6. If you're saying yes to this, what are you saying no to?
+7. What was most useful for you?
+
+Adapt the questions to sound natural, warm and professional.</pre></div>
+          <button class="copy" onclick="copyPrompt('p3', this)">Copy Prompt</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="card featured">
+      <span class="pill copper">Betty Lens</span>
+      <h2 style="margin-top:0">Coaching and AI</h2>
+      <p>AI can help draft questions, structure reflection and surface blind spots. The human coach still owns presence, judgment, listening, timing and sensitivity to context.</p>
+      <div class="note"><strong>Design principle:</strong> AI can prepare the conversation. The human relationship carries the conversation.</div>
+    </section>
+
+    <footer class="footer">
+      <strong>Executive Coaching Toolkit</strong><br />
+      GROW • OSKAR • The Coaching Habit • Reflective prompts • Decision quality<br /><br />
+      <small>Part of Betty's Work Smarter Hub. Designed for reflective leadership, coaching questions and intentional action.</small>
+    </footer>
+  </main>
+
+  <script>
+    function copyPrompt(id, btn){
+      const text=document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(()=>{
+        const old=btn.innerText;
+        btn.innerText='Copied!';
+        setTimeout(()=>btn.innerText=old,1200);
+      });
+    }
+  </script>
+</body>
+</html>

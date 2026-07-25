@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QRG | Human Capability Hub</title>
+  <style>
+    :root{
+      --primary:#2D535A;
+      --secondary:#276362;
+      --accent:#72ACA7;
+      --light:#95BBC1;
+      --cream:#D6D4C7;
+      --copper:#964734;
+      --background:#F4F7F6;
+      --card:#FFFFFF
+      --text:#24343A;
+      --muted:#5F7378;
+      --line:#DCE7E8;
+      --soft:#DCEBEB;
+      --soft2:#D7EFEC;
+      --soft3:#F2E2DD;
+      --shadow:0 10px 24px rgba(45,83,90,.10);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:linear-gradient(180deg,#F7FAF9 0%,var(--background) 100%);color:var(--text);line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    header{background:radial-gradient(circle at top right,rgba(114,172,167,.35),transparent 38%),var(--primary);color:white;padding:34px 24px 44px}
+    main{max-width:1280px;margin:auto;padding:24px}
+    h1{font-size:clamp(2.25rem,4.4vw,4rem);margin:12px 0 10px;line-height:1.05;letter-spacing:-.035em}
+    h2{color:var(--primary);margin:34px 0 14px;font-size:1.75rem;letter-spacing:-.02em}
+    h3{margin:0 0 8px;color:var(--primary);font-size:1.15rem}
+    h4{margin:18px 0 8px;color:var(--secondary)}
+    p{margin-top:0}
+    small{color:var(--muted)}
+    section,.stage-card{scroll-margin-top:110px}
+
+    .top-buttons{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+    .nav-btn,button{background:var(--secondary);color:white;border:none;border-radius:12px;padding:12px 20px;cursor:pointer;font-weight:700;font-size:15.5px;transition:.25s ease;display:inline-flex;align-items:center;justify-content:center;text-align:center;min-width:210px;min-height:46px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+    .nav-btn:hover,button:hover{background:var(--primary);transform:translateY(-1px)}
+    .nav-btn.active{background:var(--accent);color:#06353A;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+    .nav-btn.copper{background:var(--copper)}
+    .nav-btn.copper:hover{background:#7d3c2d}
+    .nav-btn.qrg{background:#95BBC1;color:#06353A}
+    .nav-btn.qrg:hover{background:#72ACA7;color:#06353A}
+    .nav-btn.qrg.active{background:#D6D4C7;color:#2D535A;box-shadow:inset 0 0 0 2px rgba(45,83,90,.35)}
+
+    .eyebrow{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#EAF6F5;border-radius:999px;padding:7px 12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem}
+    .subtitle{font-size:1.16rem;max-width:940px;margin:0;color:#EAF6F5}
+    .tagline{display:inline-block;margin-top:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);border-radius:999px;padding:10px 16px;font-weight:800;color:white}
+
+    .section{margin-top:34px}.section h2{margin-top:0}.sectionIntro{color:var(--muted);max-width:980px;margin-bottom:18px}
+    .card{background:var(--card);padding:24px;margin-bottom:20px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+    .card.featured{border-left:7px solid var(--copper)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card.third{grid-column:span 4}.card.half{grid-column:span 6}.card.full{grid-column:1/-1}
+    .pill{display:inline-flex;padding:6px 12px;border-radius:999px;font-size:.8rem;font-weight:800;background:var(--soft);color:var(--secondary);margin-bottom:12px}
+    .pill.green{background:var(--soft2);color:var(--secondary)}.pill.orange,.pill.copper{background:var(--soft3);color:var(--copper)}.pill.dark{background:#E8F0F1;color:var(--primary)}
+    .note{background:#FBF6F4;border-left:6px solid var(--copper);padding:16px 18px;border-radius:12px;color:#3B4245;margin:18px 0}
+
+    .heroFlow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}.heroFlow span{background:var(--secondary);color:white;border-radius:12px;padding:11px 13px;font-weight:800}.arrow{color:var(--secondary);font-weight:900}
+
+    /* Interactive lifecycle bar */
+    .lifecycle-wrap{position:sticky;top:0;z-index:20;background:rgba(244,247,246,.96);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:18px;padding:12px;margin:24px 0;box-shadow:0 8px 20px rgba(45,83,90,.08)}
+    .lifecycle-bar{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:4px}
+    .lifecycle-bar a{flex:0 0 auto;scroll-snap-align:start;background:#FBFDFD;border:1px solid var(--line);border-radius:999px;padding:10px 14px;font-weight:850;color:var(--primary);white-space:nowrap;transition:.2s ease;box-shadow:0 2px 8px rgba(45,83,90,.05)}
+    .lifecycle-bar a:hover{background:var(--soft);border-color:var(--accent);transform:translateY(-1px)}
+    .lifecycle-bar a.gate{background:var(--soft3);color:var(--copper);border-color:#E7C7BE}
+    .lifecycle-hint{font-size:.86rem;color:var(--muted);margin:8px 4px 0}
+
+    /* Visual lifecycle map */
+    .roadmap{background:#FFFFFF;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow);overflow-x:auto}
+    .roadmap-title{text-align:center;margin-bottom:18px}.roadmap-title h2{margin-bottom:6px}.roadmap-title p{color:var(--muted)}
+    .stage-row{display:grid;grid-template-columns:repeat(11, minmax(150px,1fr));gap:12px;min-width:1750px;align-items:stretch}
+    .stage-card{position:relative;background:#FBFDFD;border:1px solid #BFD7D8;border-radius:16px;padding:18px 14px 14px;min-height:230px;box-shadow:0 2px 8px rgba(45,83,90,.05)}
+    .stage-card:after{content:"→";position:absolute;right:-17px;top:82px;color:var(--secondary);font-size:28px;font-weight:900}
+    .stage-card:last-child:after{content:""}
+    .stage-no{position:absolute;top:-18px;left:15px;width:38px;height:38px;border-radius:50%;background:var(--secondary);color:white;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+    .stage-card .icon{font-size:30px;margin:18px 0 8px;color:var(--secondary)}
+    .stage-card h3{text-align:center;text-transform:uppercase;letter-spacing:.015em;font-size:.95rem;margin-bottom:10px}
+    .stage-card ul{padding-left:18px;margin:0;font-size:.88rem}.stage-card li{margin:5px 0}
+    .deliverable{margin-top:12px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#F7FAF9}
+    .deliverable .label{background:var(--secondary);color:white;font-size:.74rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em;padding:6px 9px}
+    .deliverable p{padding:9px;margin:0;font-size:.82rem;color:#13333A}
+    .gate-badge{position:absolute;top:-48px;right:4px;background:var(--copper);color:white;border-radius:14px;padding:8px 10px;font-size:.73rem;font-weight:900;text-align:center;box-shadow:0 5px 14px rgba(150,71,52,.25)}
+    .gate-badge:after{content:"";position:absolute;bottom:-18px;left:50%;height:18px;border-left:2px dashed var(--copper)}
+
+    .continuous{background:#F7FAF9;border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:24px}
+    .continuous h3{text-align:center;margin-bottom:18px}
+    .thread{display:grid;grid-template-columns:170px 1fr 260px;gap:18px;align-items:center;margin:18px 0}
+    .role-badge{display:flex;gap:10px;align-items:center;font-weight:900;color:var(--primary)}
+    .role-dot{width:42px;height:42px;border-radius:50%;background:var(--secondary);color:white;display:flex;align-items:center;justify-content:center;font-weight:900}
+    .line{height:4px;background:linear-gradient(90deg,var(--secondary),var(--accent));position:relative;border-radius:999px}.line:after{content:"";position:absolute;right:-1px;top:-6px;border-left:14px solid var(--accent);border-top:8px solid transparent;border-bottom:8px solid transparent}.line.lps{background:linear-gradient(90deg,#648B4E,#8AA774)}.line.lps:after{border-left-color:#8AA774}.line.ld{background:linear-gradient(90deg,var(--secondary),#197E8D)}.line.ld:after{border-left-color:#197E8D}
+    .thread p{margin:0;color:#1D3D43;font-size:.92rem}
+
+    .stage-detail{display:grid;grid-template-columns:280px 1fr;gap:16px;margin-bottom:18px;align-items:stretch}
+    .stage-sidebar{background:#0F3036;color:#F4FBFA;border-radius:16px;padding:20px;border-left:7px solid var(--copper);position:sticky;top:88px;height:100%;display:flex;flex-direction:column;}
+    .stage-sidebar h3{color:white}.stage-sidebar p{font-size:.94rem;color:#D8EAEA}.stage-sidebar .pill{margin-top:8px}
+    .stage-content .subgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.mini{background:#FBFDFD;border:1px solid var(--line);border-radius:14px;padding:16px}.mini h4{margin-top:0}.mini ul{padding-left:18px;margin:6px 0}.mini li{margin:6px 0}
+
+    table{width:100%;border-collapse:collapse;background:white;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(45,83,90,.06);border:1px solid var(--line)}th,td{padding:14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:var(--primary);color:white;font-weight:800}tr:last-child td{border-bottom:none}
+
+    details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 2px 8px rgba(45,83,90,.06);margin-bottom:12px}summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:850;color:var(--primary);display:flex;justify-content:space-between;align-items:center;gap:10px;background:#FBFDFD}summary::-webkit-details-marker{display:none}summary::after{content:"+";font-size:1.5rem;color:var(--secondary)}details[open] summary::after{content:"−"}.details-inner{padding:0 20px 20px;color:var(--text)}
+    .context{background:#FBF6F4;border-left:6px solid var(--copper);padding:14px 16px;border-radius:12px;margin:14px 0;color:#3B4245}.prompt{background:#0F3036;color:#F4FBFA;border-radius:14px;padding:18px;margin:14px 0;position:relative;overflow:auto;border-left:6px solid var(--copper)}pre{white-space:pre-wrap;margin:0;font-family:"Consolas","Courier New",monospace;font-size:.92rem}.copy{margin-top:10px;background:var(--copper);min-width:150px}.copy:hover{background:#7d3c2d}
+    .footer{margin-top:34px;padding:24px;border-radius:var(--radius);background:var(--primary);color:#F4FBFA;box-shadow:var(--shadow)}.footer small{color:#D8EAEA}
+
+    @media(max-width:1100px){.card.third,.card.half{grid-column:1/-1}.thread{grid-template-columns:140px 1fr}.thread p{grid-column:1/-1}.stage-detail{grid-template-columns:1fr}.stage-sidebar{position:relative;top:0}.stage-content .subgrid{grid-template-columns:1fr}}
+    @media(max-width:640px){header{padding:24px 18px 34px}main{padding:18px}.nav-btn,button{width:100%;min-width:0}.heroFlow span{width:100%}.arrow{display:none}.roadmap{padding:16px}.lifecycle-wrap{position:relative}.thread{grid-template-columns:1fr}.stage-row{min-width:1550px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-buttons" aria-label="Primary navigation">
+      <a class="nav-btn" href="index.html">Home</a>
+      <a class="nav-btn" href="learning-experience-design.html">Learning Design</a>
+      <a class="nav-btn" href="change-adoption.html">Change Adoption</a>
+      <a class="nav-btn" href="idea-space.html">Idea Space</a>
+      <a class="nav-btn" href="executive-coaching-final.html">Executive Coaching</a>
+      <a class="nav-btn copper" href="prompt-library.html">Prompt Library</a>
+      <a class="nav-btn qrg active" href="qrg.html">QRG</a>
+    </div>
+    <span class="eyebrow">Human Capability Hub</span>
+    <h1>Quick Reference Guide</h1>
+    <p class="subtitle">A Learning Designer Operating Guide for managing CPE/CE learning projects from project intake through publication.</p>
+    <div class="tagline">Design early. Document clearly. Review before publication.</div>
+  </header>
+
+  <main>
+    <section class="card featured">
+      <span class="pill copper">Learning Designer Operating Guide</span>
+      <h2 style="margin-top:0">Purpose of this guide</h2>
+      <p>This guide organizes the end-to-end learning project lifecycle into a practical operating model for Learning Designers. It integrates project governance, stakeholder engagement, learner profile, high-level design, detailed design, development, reviews, copy edit, quality assurance, accessibility and CPE/CE documentation.</p>
+      <div class="note"><strong>Learning Designer Operating Guide</strong><br>This page is a working guide for planning, designing and reviewing learning projects. It does not replace current internal CPE/CE requirements, QA standards, accessibility guidance, brand/copy edit standards or reviewer decisions.</div>
+    </section>
+
+    <section class="roadmap" aria-label="CPE CE course development lifecycle map">
+      <div class="roadmap-title">
+        <h2>CPE/CE Course Development Journey</h2>
+        <p>Learning Designer workflow with milestone gates, signoffs and deliverables.</p>
+      </div>
+      <div class="stage-row">
+        <div class="stage-card" id="roadmap-project-intake"><div class="stage-no">1</div><div class="icon">📋</div><h3>Project Intake</h3><ul><li>Project assigned</li><li>Initial review</li><li>Stakeholders identified</li><li>Business drivers understood</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>Project record<br>Initial stakeholder list<br>Known inputs</p></div></div>
+        <div class="stage-card" id="roadmap-kickoff"><div class="stage-no">2</div><div class="icon">👥</div><h3>Kickoff Meeting</h3><ul><li>Explain Design Studio process</li><li>Confirm roles and cadence</li><li>Identify SMEs and Lead SMR</li><li>Clarify success measures</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>Project charter<br>Stakeholder map<br>Cadence plan</p></div></div>
+        <div class="stage-card" id="roadmap-discovery"><div class="stage-no">3</div><div class="icon">🔎</div><h3>Discovery</h3><ul><li>Learner profile</li><li>Audience analysis</li><li>Performance gap</li><li>Content inventory</li><li>Compliance needs</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>Discovery findings<br>Learner profile<br>Content inventory<br>Performance needs</p></div></div>
+        <div class="stage-card" id="roadmap-hld"><div class="gate-badge">Business<br>Signoff</div><div class="stage-no">4</div><div class="icon">🎯</div><h3>High-Level Design</h3><ul><li>Learning objectives</li><li>Key topics</li><li>Activities approach</li><li>Assessment approach</li><li>Modality recommendation</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>High-level design<br>Learning objectives<br>Topic outline<br>Assessment approach</p></div></div>
+        <div class="stage-card" id="roadmap-dld"><div class="stage-no">5</div><div class="icon">📝</div><h3>Detailed Design</h3><ul><li>Storyboard</li><li>Activity design</li><li>Assessment design</li><li>Facilitation design</li><li>Media plan</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>Detailed design<br>Storyboard<br>Assessment plan<br>Facilitation plan</p></div></div>
+        <div class="stage-card" id="roadmap-development"><div class="stage-no">6</div><div class="icon">🛠</div><h3>Development</h3><ul><li>Build content</li><li>Build interactions</li><li>Develop assessments</li><li>Create media assets</li><li>Work with VH/LH team</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>Working build<br>Course assets<br>Media assets<br>Draft assessments</p></div></div>
+        <div class="stage-card" id="roadmap-alpha"><div class="stage-no">7</div><div class="icon">👥</div><h3>Alpha Review</h3><ul><li>SME/SMR review</li><li>Accuracy check</li><li>Content validation</li><li>Identify gaps</li><li>Improvement feedback</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>Alpha feedback<br>Content updates<br>Revised build</p></div></div>
+        <div class="stage-card" id="roadmap-copy"><div class="stage-no">8</div><div class="icon">✍️</div><h3>Copy Edit</h3><ul><li>Brand and style guide</li><li>Grammar and usage</li><li>Accessibility language</li><li>Copyright check</li><li>Consistency review</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>Copy-edited content<br>Clean version<br>Accessibility check<br>Copyright clearance</p></div></div>
+        <div class="stage-card" id="roadmap-gold"><div class="gate-badge">Final Content<br>Signoff</div><div class="stage-no">9</div><div class="icon">🏅</div><h3>Gold Review</h3><ul><li>Final business review</li><li>Validate accuracy</li><li>Confirm alignment</li><li>Final approval</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>Gold signoff<br>Approved build<br>Final approval</p></div></div>
+        <div class="stage-card" id="roadmap-qa"><div class="gate-badge">QA Approval<br>Gate</div><div class="stage-no">10</div><div class="icon">🛡</div><h3>QA & Compliance</h3><ul><li>QA2 review</li><li>Accessibility review</li><li>CPE/CE documentation</li><li>Timed agenda</li><li>NASBA checklist</li><li>Compliance check</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>QA approval<br>Accessibility approval<br>CPE/CE docs complete<br>Compliance approval</p></div></div>
+        <div class="stage-card" id="roadmap-publication"><div class="stage-no">11</div><div class="icon">🚀</div><h3>Publication</h3><ul><li>Upload and configure</li><li>SuccessFactors / LMS setup</li><li>Final documentation</li><li>Course live</li></ul><div class="deliverable"><div class="label">Deliverable</div><p>Published course<br>LMS configuration<br>Final documentation<br>Go-live</p></div></div>
+      </div>
+        </section>
+
+    <div class="lifecycle-wrap" aria-label="Interactive lifecycle navigation">
+      <div class="lifecycle-bar">
+        <a href="#project-intake">1. Project Intake</a>
+        <a href="#kickoff">2. Kickoff</a>
+        <a href="#discovery">3. Discovery</a>
+        <a href="#high-level-design" class="gate">4. High-Level Design</a>
+        <a href="#detailed-design">5. Detailed Design</a>
+        <a href="#development">6. Development</a>
+        <a href="#alpha-review">7. Alpha Review</a>
+        <a href="#copy-edit">8. Copy Edit</a>
+        <a href="#gold-review" class="gate">9. Gold Review</a>
+        <a href="#qa-compliance" class="gate">10. QA & Compliance</a>
+        <a href="#publication">11. Publication</a>
+        <a href="#modality-checkpoints">Modality Checkpoints</a>
+        <a href="#prompt-cards">Prompt Cards</a>
+      </div>
+      <div class="lifecycle-hint">Use this bar to move across the operating guide from left to right.</div>
+    </div>
+
+    <section class="section" id="project-intake">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 1</span><h3>Project Intake</h3><p>Initial capture of the learning request, known context and starting stakeholders.</p></aside>
+        <div class="stage-content card"><h2>Project Intake</h2><div class="subgrid"><div class="mini"><h4>Participants</h4><ul><li>LSA</li><li>LPS</li><li>LD / LXD</li><li>Learning Consultant</li><li>Business sponsor or requestor</li></ul></div><div class="mini"><h4>Learning Designer activities</h4><ul><li>Review the assigned request.</li><li>Review existing course or source materials if available.</li><li>Understand known business drivers.</li><li>Identify known stakeholders and missing inputs.</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>Project record</li><li>Initial stakeholder list</li><li>Request details</li><li>Known inputs and open questions</li></ul></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="kickoff">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 2</span><h3>Kickoff</h3><p>Align the project team on process, cadence, business needs and stakeholder roles.</p></aside>
+        <div class="stage-content card"><h2>Kickoff Meeting</h2><div class="subgrid"><div class="mini"><h4>Participants</h4><ul><li>LSA</li><li>LPS</li><li>LD / LXD</li><li>Learning Consultant</li><li>Business representatives</li><li>Lead SMR and optional additional SMEs</li></ul></div><div class="mini"><h4>Activities</h4><ul><li>Explain the Design Studio process.</li><li>Confirm ownership and roles.</li><li>Agree cadence and review approach.</li><li>Clarify business requirements and the reason for creating/updating learning.</li><li>Identify Lead SMR and additional SMRs.</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>Project charter</li><li>Stakeholder map</li><li>Meeting cadence</li><li>Governance model</li><li>Lead SMR identified</li></ul></div></div><div class="note"><strong>LPS note:</strong> LPS is involved in almost all project meetings and weekly status calls, except detailed SME knowledge-transfer or content working sessions unless required.</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="discovery">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 3</span><h3>Discovery</h3><p>Clarify audience, business need, performance gap, content sources and constraints.</p> <div class="agent-card">
+<strong>🤖 Recommended Agent</strong>
+<div class="agent-name">
+Idea Coach for LD
+</div>
+</div>
+</p></aside>
+        <div class="stage-content card"><h2>Discovery</h2><div class="subgrid"><div class="mini"><h4>Learner profile</h4><ul><li>Audience and role</li><li>Experience level</li><li>Prerequisites</li><li>Access considerations</li><li>Engagement and support needs</li></ul></div><div class="mini"><h4>Performance discovery</h4><ul><li>Current state</li><li>Desired state</li><li>Business outcomes</li><li>Performance gap</li><li>Success measures</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>Discovery findings</li><li>Learner profile</li><li>Content inventory</li><li>Performance requirements</li><li>Initial compliance needs</li></ul></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="high-level-design">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 4</span><h3>High-Level Design</h3><p>Translate discovery into learning objectives, topic structure and recommended design approach. 
+<div class="agent-card">
+<strong>🤖 Recommended Agent</strong>
+<div class="agent-name">
+Learning Objectives Generator
+</div>
+</div>
+</p></aside>
+        <div class="stage-content card"><h2>High-Level Design</h2><div class="subgrid"><div class="mini"><h4>Activities</h4><ul><li>Define measurable learning objectives.</li><li>Map key topics under each objective.</li><li>Identify possible activities.</li><li>Identify possible assessment approach.</li><li>Recommend modality and tools.</li></ul></div><div class="mini"><h4>Milestone gate</h4><ul><li><strong>Business signoff required.</strong></li><li>Confirm HLD with business sponsor or lead business contact before detailed design.</li><li>Capture feedback and decisions clearly.</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>High-level design</li><li>Learning objectives</li><li>Topic outline</li><li>Assessment approach</li><li>Modality recommendation</li></ul></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="detailed-design">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 5</span><h3>Detailed Design</h3><p>Build the detailed storyboard, activities, assessments, facilitation plan and modality-specific design. 
+<div class="agent-card">
+<strong>🤖 Recommended Agent</strong>
+<div class="agent-name">
+Assessment Question Generator
+</div>
+</div>
+</p></aside>
+        <div class="stage-content card"><h2>Detailed Design</h2><div class="subgrid"><div class="mini"><h4>Activities</h4><ul><li>Expand objectives into detailed learning flow.</li><li>Build storyboard or detailed design.</li><li>Design activities, debriefs and practice.</li><li>Design assessments or checks.</li><li>Plan facilitator notes and learner materials.</li></ul></div><div class="mini"><h4>Tools and formats</h4><ul><li>PowerPoint for VLC/VGL or facilitator-led formats.</li><li>Rise, Storyline or HTML for digital learning.</li><li>Storyboard and media plan for development support.</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>Detailed design</li><li>Storyboard</li><li>Assessment plan</li><li>Facilitation plan</li><li>Media plan</li></ul></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="development">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 6</span><h3>Development</h3><p>Build the learning product and coordinate multimedia and development support. 
+<div class="agent-card">
+<strong>🤖 Recommended Agent</strong>
+<div class="agent-name">
+Style Guide Assistant
+<div class="agent-name">QA1 VLC Compliance Checker (optional)
+</div>
+</div>
+</p></aside>
+        <div class="stage-content card"><h2>Development</h2><div class="subgrid"><div class="mini"><h4>Participants</h4><ul><li>LD / LXD</li><li>VH / LH support team</li><li>Graphic designers</li><li>Video developers</li><li>SMEs for clarification as needed</li></ul></div><div class="mini"><h4>Activities</h4><ul><li>Build in the recommended tool.</li><li>Create interactions, graphics, videos and assessments.</li><li>Apply brand and accessibility considerations early.</li><li>Prepare course for alpha review.</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>Working build</li><li>Course assets</li><li>Media assets</li><li>Draft assessments</li><li>Learner/facilitator materials</li></ul></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="alpha-review">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 7</span><h3>Alpha Review</h3><p>Review the working build with SMEs/SMRs for accuracy, relevance and completeness.</p></aside>
+        <div class="stage-content card"><h2>Alpha Review</h2><div class="subgrid"><div class="mini"><h4>Participants</h4><ul><li>LD / LXD</li><li>Lead SMR</li><li>Relevant SMEs / SMRs</li><li>LPS for review coordination as needed</li></ul></div><div class="mini"><h4>Activities</h4><ul><li>Validate accuracy.</li><li>Identify content gaps.</li><li>Remove content that does not need to be in the module.</li><li>Capture feedback and update build.</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>Alpha feedback</li><li>Content updates</li><li>Updated build</li><li>Open items log</li></ul></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="copy-edit">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 8</span><h3>Copy Edit</h3><p>Check brand, style, grammar, copyright, accessibility language and formatting consistency. 
+<div class="agent-card">
+<strong>🤖 Recommended Agent</strong>
+<div class="agent-name">
+Style Guide Assistant
+</div>
+</div>
+</p></aside>
+        <div class="stage-content card"><h2>Copy Edit</h2><div class="subgrid"><div class="mini"><h4>Activities</h4><ul><li>Apply copy edit guidelines.</li><li>Check approved/prohibited words.</li><li>Check punctuation, capitalization and formatting.</li><li>Check copyright callouts.</li><li>Review accessibility language.</li></ul></div><div class="mini"><h4>AI support opportunity</h4><ul><li>Use a style-guide/checklist assistant before formal copy edit.</li><li>Identify brand or copyright issues early to reduce rework.</li><li>Human copy editor/reviewer remains final authority.</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>Copy-edited content</li><li>Clean version</li><li>Style guide check</li><li>Copyright clearance</li><li>Accessibility language review</li></ul></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="gold-review">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 9</span><h3>Gold Review</h3><p>Final business review and final content signoff before QA and publication preparation.</p></aside>
+        <div class="stage-content card"><h2>Gold Review</h2><div class="subgrid"><div class="mini"><h4>Participants</h4><ul><li>Business sponsor or lead business contact</li><li>LD / LXD</li><li>LPS</li><li>SME/SMR as needed</li></ul></div><div class="mini"><h4>Activities</h4><ul><li>Final business validation.</li><li>Confirm accuracy and alignment.</li><li>Confirm readiness for QA.</li><li>Capture final content signoff.</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>Gold signoff</li><li>Approved build</li><li>Final approval record</li></ul></div></div><div class="note"><strong>Milestone gate:</strong> Final content signoff is required before QA and compliance are completed.</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="qa-compliance">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 10</span><h3>QA & Compliance</h3><p>QA, accessibility and CPE/CE documentation happen before publication. 
+<div class="agent-card">
+<strong>🤖 Recommended Agent</strong>
+<div class="agent-name">
+QA1 VLC Compliance Checker
+</div>
+</div>
+</p></aside>
+        <div class="stage-content card"><h2>QA & Compliance</h2><div class="subgrid"><div class="mini"><h4>QA and accessibility</h4><ul><li>QA2 review</li><li>Functionality testing</li><li>Accessibility review</li><li>Alt text and contrast checks</li><li>Language and navigation review</li></ul></div><div class="mini"><h4>CPE/CE documentation</h4><ul><li>Timed agenda</li><li>Minutes calculation</li><li>Field of Study confirmation</li><li>NASBA checklist</li><li>Required documentation package</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>QA approval</li><li>Accessibility approval</li><li>CPE/CE documents complete</li><li>Compliance approval</li></ul></div></div><div class="note"><strong>Milestone gate:</strong> QA and compliance approval must be completed before publication.</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="publication">
+      <div class="stage-detail">
+        <aside class="stage-sidebar"><span class="pill copper">Stage 11</span><h3>Publication</h3><p>Final setup, publication and learner access confirmation.</p></aside>
+        <div class="stage-content card"><h2>Publication</h2><div class="subgrid"><div class="mini"><h4>Participants</h4><ul><li>LPS</li><li>L&D Support / Ops</li><li>LD / LXD support as needed</li></ul></div><div class="mini"><h4>Activities</h4><ul><li>Upload and configure course.</li><li>Complete SuccessFactors / LMS setup.</li><li>Attach or upload final documentation.</li><li>Confirm catalog entry and learner access.</li></ul></div><div class="mini"><h4>Deliverables</h4><ul><li>Published course</li><li>LMS configuration</li><li>Catalog entry</li><li>Final documentation</li><li>Go-live confirmation</li></ul></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="modality-checkpoints">
+      <h2>Modality-specific checkpoints</h2>
+      <p class="sectionIntro">Use these checks during detailed design, development and QA planning.</p>
+      <div class="grid">
+        <div class="card half"><span class="pill">ILT / In-person</span><h3>Classroom or in-person learning</h3><ul><li>Facilitation plan and activities.</li><li>Learner engagement strategy.</li><li>Timing and logistics.</li><li>Clear debriefs and key takeaways.</li></ul></div>
+        <div class="card half"><span class="pill green">VLC / VGL</span><h3>Live virtual learning</h3><ul><li>Polling strategy and engagement points.</li><li>Virtual monitoring plan.</li><li>Timing and technology requirements.</li><li>Facilitator instructions.</li></ul></div>
+        <div class="card half"><span class="pill orange">eLearning / Self-study</span><h3>Asynchronous learning</h3><ul><li>Knowledge checks and assessments.</li><li>Feedback quality.</li><li>Completion rules.</li><li>Duration and minutes calculation.</li></ul></div>
+        <div class="card half"><span class="pill dark">Common quality risks</span><h3>Check early to reduce rework</h3><ul><li>Objectives not achieved.</li><li>Activities not debriefed.</li><li>Missing summaries/key takeaways.</li><li>Documentation changes not applied consistently.</li><li>Polling or assessment quality issues.</li></ul></div>
+      </div>
+    </section>
+
+    <section class="section" id="prompt-cards">
+      <h2>Prompt cards for CPE/CE course design</h2>
+      <p class="sectionIntro">Use these with source material, course outlines, agendas or SME notes.</p>
+      <details open>
+        <summary>Create a learner profile for a CPE/CE course</summary>
+        <div class="details-inner"><div class="context"><strong>Context:</strong> Use before design decisions or SME meetings.</div><div class="prompt"><pre id="qrg1">Act as a Learning Designer creating a learner profile for a CPE/CE course.
+
+Course topic:
+[Insert topic]
+
+Audience:
+[Insert known audience]
+
+Create a learner profile covering:
+1. Role and audience description
+2. Prerequisites or assumed knowledge
+3. Current performance context
+4. Desired performance outcome
+5. Motivation or relevance drivers
+6. Accessibility or access considerations
+7. Modality suitability
+8. Engagement needs
+9. Practice/support needs
+10. SME questions to clarify learner context</pre></div><button class="copy" onclick="copyPrompt('qrg1', this)">Copy Prompt</button></div>
+      </details>
+      <details>
+        <summary>Create a CPE/CE design readiness checklist</summary>
+        <div class="details-inner"><div class="context"><strong>Context:</strong> Use before design or before formal review.</div><div class="prompt"><pre id="qrg2">Act as a CPE/CE learning design readiness reviewer.
+
+Course information:
+[Paste course information]
+
+Modality:
+[Insert modality]
+
+Credit type:
+[Insert CPE, CE, or both]
+
+Create a readiness checklist covering:
+1. Learner profile
+2. Business purpose
+3. Learning objectives
+4. Modality fit
+5. Activities and debriefs
+6. Knowledge checks or assessments
+7. Timing and agenda needs
+8. Documentation required
+9. Role owners
+10. Risks and open questions
+
+Mark each item as Ready / Needs clarification / Risk.</pre></div><button class="copy" onclick="copyPrompt('qrg2', this)">Copy Prompt</button></div>
+      </details>
+      <details>
+        <summary>Prepare SME questions for a CPE/CE course</summary>
+        <div class="details-inner"><div class="context"><strong>Context:</strong> Use before SME meetings.</div><div class="prompt"><pre id="qrg3">Act as a Learning Designer preparing for an SME meeting for a CPE/CE course.
+
+Course topic:
+[Insert topic]
+
+Known modality:
+[Insert modality or unknown]
+
+Create questions grouped by:
+- Learner profile
+- Business outcome
+- Learning objectives
+- Content accuracy
+- Practical application
+- Activities and debriefs
+- Assessment or knowledge checks
+- Field of Study or classification considerations
+- Timing and duration
+- Documentation and review risks
+
+Prioritize the must-ask questions first.</pre></div><button class="copy" onclick="copyPrompt('qrg3', this)">Copy Prompt</button></div>
+      </details>
+<details>
+        <summary> Copy Edit / QA & Compliance: Style Guide Assistant</summary>
+        <div class="details-inner"><div class="context"><strong>Context:</strong> Use before sending content for formal copy edit or brand review.</div><div class="prompt"><pre id="qrg3">Act as Style Guide Assistant.
+
+Review the content below against EY branding, style and copy-edit expectations.
+
+Check for:
+- Acronyms not expanded on first use
+- Serial comma issues
+- Sentence case vs title case issues
+- All caps usage
+- Straight quotes vs smart quotes
+- US English spelling
+- Risky words from the watch-out list
+- Grammar and punctuation inconsistencies
+- Accessibility language concerns
+- Copyright-sensitive references
+
+For each issue provide:
+- Issue
+- Location
+- Why it matters
+- Suggested fix
+
+Then provide an overall readiness rating:
+- Ready
+- Ready with minor edits
+- Needs significant edits
+
+Content to review:
+[Attach/Paste content here]
+</pre></div><button class="copy" onclick="copyPrompt('qrg3', this)">Copy Prompt</button></div>
+      </details>
+<details>
+        <summary> Draft Learning Objectives</summary>
+        <div class="details-inner"><div class="context"><strong>Context:</strong> Use when turning business needs, SME notes or performance gaps into measurable objectives.</div><div class="prompt"><pre id="qrg3">
+Act as a Learning Designer Generating Objectives for a new learning initiative.
+
+Business Need:
+[Insert business need]
+
+Audience:
+[Insert audience]
+
+Current State:
+[Insert current performance]
+
+Desired Performance:
+[Insert desired performance]
+
+Generate:
+1. Business outcome statement
+2. Learner performance goals
+3. 3-5 measurable learning objectives
+4. Suggested Bloom's level
+5. Evidence that the learner achieved the objective
+6. Recommended learning activity types
+7. Recommended assessment approach
+
+Format as:
+Objective | Bloom Level | Activity | Assessment</pre></div><button class="copy" onclick="copyPrompt('qrg3', this)">Copy Prompt</button></div>
+      </details>
+<details>
+        <summary> Assessment Question Coach(Quincy)</summary>
+        <div class="details-inner"><div class="context"><strong>Context:</strong> Use when building knowledge checks, checks for understanding, assessments or scenario questions.</div><div class="prompt"><pre id="qrg3">
+Act as a learning designer creating Assessment Question.
+
+Learning Objective:
+[Insert objective]
+
+Audience:
+[Insert audience]
+
+Difficulty Level:
+[Basic / Intermediate / Advanced]
+
+Generate:
+- 5 multiple-choice questions
+- 2 scenario-based questions
+- Correct answers
+- Rationales for each answer
+
+Check that:
+- Questions align to the learning objective
+- Distractors are plausible
+- Questions test application, not recall only
+- Language is clear and unbiased
+
+Present the result in a review-ready format.</pre></div><button class="copy" onclick="copyPrompt('qrg3', this)">Copy Prompt</button></div>
+      </details>
+<details>
+        <summary>Idea Coach for LD</summary>
+        <div class="details-inner"><div class="context"><strong>Context:</strong> Use when you need learning approach ideas, activities, scenarios or alternative design options.</div><div class="prompt"><pre id="qrg3">
+Act as Idea Coach for Learning Designers.
+
+Challenge:
+[Insert challenge]
+
+Audience:
+[Insert audience]
+
+Learning Modality:
+[Insert modality]
+
+Help me generate:
+1. Alternative learning approaches
+2. Interactive activities
+3. Reflection opportunities
+4. Practice opportunities
+5. Storytelling ideas
+6. Scenario ideas
+7. Reinforcement approaches
+8. AI-enhanced learning opportunities
+
+Provide:
+- Conservative Option
+- Recommended Option
+- Innovative Option.</pre></div><button class="copy" onclick="copyPrompt('qrg3', this)">Copy Prompt</button></div>
+      </details>
+<details>
+        <summary> QA1 VLC Compliance Checker) </summary>
+        <div class="details-inner"><div class="context"><strong>Context:</strong> Use when checking VLC / live virtual learning readiness before formal review.</div><div class="prompt"><pre id="qrg3">
+Act as a QA1 VLC Compliance Checker.
+
+Review the course information below.
+
+Course Information:
+[Paste details]
+
+Timed Agenda:
+[Paste agenda]
+
+Learning Objectives:
+[Paste objectives]
+
+Polling Plan:
+[Paste polling strategy]
+
+Check for:
+- Alignment of objectives and content
+- Timed agenda completeness
+- VLC participation requirements
+- Polling requirements
+- Learner engagement opportunities
+- Assessment alignment
+- Documentation completeness
+- Potential QA1 risks
+
+Provide:
+- Pass
+- Needs Clarification
+- Potential Issue
+
+For every issue include:
+- Observation
+- Evidence
+- Recommendation
+- Priority.</pre></div><button class="copy" onclick="copyPrompt('qrg3', this)">Copy Prompt</button></div>
+      </details>
+
+    </section>
+
+    <footer class="footer">
+      <strong>Quick Reference Guide</strong><br />
+      Learning Designer Operating Guide • Lifecycle roadmap • Milestone gates • Deliverables • LSA/LPS continuous involvement • Modality checkpoints • Prompt cards<br /><br />
+      <small>Part of the Human Capability Hub. Use this page with current CPE/CE guidance, QA standards, accessibility requirements and reviewer input.</small>
+    </footer>
+  </main>
+  <script>
+    function copyPrompt(id,btn){const text=document.getElementById(id).innerText;navigator.clipboard.writeText(text).then(()=>{const old=btn.innerText;btn.innerText='Copied!';setTimeout(()=>btn.innerText=old,1200);});}
+  </script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Library | Work Smarter Hub</title>
+  <style>
+    :root{
+      --primary:#2D535A;
+      --secondary:#276362;
+      --accent:#72ACA7;
+      --light:#95BBC1;
+      --cream:#D6D4C7;
+      --copper:#964734;
+      --background:#F4F7F6;
+      --card:#FFFFFF;
+      --text:#24343A;
+      --muted:#5F7378;
+      --line:#DCE7E8;
+      --soft:#DCEBEB;
+      --soft2:#D7EFEC;
+      --soft3:#F2E2DD;
+      --shadow:0 10px 24px rgba(45,83,90,.10);
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Arial,sans-serif;
+      background:linear-gradient(180deg,#F7FAF9 0%, var(--background) 100%);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    header{
+      background:radial-gradient(circle at top right, rgba(114,172,167,.35), transparent 38%), var(--primary);
+      color:white;
+      padding:34px 24px 44px;
+    }
+    main{max-width:1280px;margin:auto;padding:24px}
+    h1{font-size:clamp(2.25rem,4.4vw,4rem);margin:12px 0 10px;line-height:1.05;letter-spacing:-.035em}
+    h2{color:var(--primary);margin:34px 0 14px;font-size:1.75rem;letter-spacing:-.02em}
+    h3{margin:0 0 8px;color:var(--primary);font-size:1.15rem}
+    p{margin-top:0}
+    small{color:var(--muted)}
+
+    .top-buttons{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+    .nav-btn,button{
+      background:var(--secondary);
+      color:white;
+      border:none;
+      border-radius:12px;
+      padding:12px 20px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:15.5px;
+      transition:.25s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      min-width:210px;
+      min-height:46px;
+      box-shadow:0 4px 10px rgba(0,0,0,.08);
+    }
+    .nav-btn:hover, button:hover{background:var(--primary);transform:translateY(-1px)}
+    .nav-btn.active{background:var(--accent);color:#06353A;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+    .nav-btn.copper{background:var(--copper)}
+    .nav-btn.copper:hover{background:#7d3c2d}
+.nav-btn.qrg{background:#95BBC1;color:#06353A;}
+.nav-btn.qrg:hover{background:#72ACA7;color:#06353A;}
+.nav-btn.qrg.active{background:#D6D4C7;color:#2D535A;box-shadow:inset 0 0 0 2px rgba(45,83,90,.35);}
+
+    .eyebrow{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#EAF6F5;border-radius:999px;padding:7px 12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem}
+    .subtitle{font-size:1.16rem;max-width:940px;margin:0;color:#EAF6F5}
+    .tagline{display:inline-block;margin-top:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);border-radius:999px;padding:10px 16px;font-weight:800;color:white}
+
+    .section{margin-top:34px}
+    .section h2{margin-top:0}
+    .sectionIntro{color:var(--muted);max-width:940px;margin-bottom:18px}
+    .card{background:var(--card);padding:24px;margin-bottom:20px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+    .card.featured{border-left:7px solid var(--copper)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card.third{grid-column:span 4}.card.half{grid-column:span 6}.card.full{grid-column:1/-1}
+    .pill{display:inline-flex;padding:6px 12px;border-radius:999px;font-size:.8rem;font-weight:800;background:var(--soft);color:var(--secondary);margin-bottom:12px}
+    .pill.green{background:var(--soft2);color:var(--secondary)}
+    .pill.orange{background:var(--soft3);color:var(--copper)}
+    .pill.dark{background:#E8F0F1;color:var(--primary)}
+    .pill.copper{background:var(--soft3);color:var(--copper)}
+
+    .prompt-structure{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+    .prompt-structure span{background:var(--secondary);color:white;border-radius:12px;padding:11px 13px;font-weight:800}
+    .arrow{color:var(--secondary);font-weight:900}
+
+    .quickNav{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .quickNav a{background:#FBFDFD;border:1px solid var(--line);border-radius:999px;color:var(--primary);padding:9px 13px;font-weight:800;box-shadow:0 2px 8px rgba(45,83,90,.04)}
+    .quickNav a:hover{border-color:var(--accent);background:#F7FAF9}
+
+    details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 2px 8px rgba(45,83,90,.06);margin-bottom:12px}
+    summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:850;color:var(--primary);display:flex;justify-content:space-between;align-items:center;gap:10px;background:#FBFDFD}
+    summary::-webkit-details-marker{display:none}
+    summary::after{content:"+";font-size:1.5rem;color:var(--secondary)}
+    details[open] summary::after{content:"−"}
+    .details-inner{padding:0 20px 20px;color:var(--text)}
+    .context{background:#FBF6F4;border-left:6px solid var(--copper);padding:14px 16px;border-radius:12px;margin:14px 0;color:#3B4245}
+    .prompt{background:#0F3036;color:#F4FBFA;border-radius:14px;padding:18px;margin:14px 0;position:relative;overflow:auto;border-left:6px solid var(--copper)}
+    pre{white-space:pre-wrap;margin:0;font-family:"Consolas","Courier New",monospace;font-size:.92rem}
+    .copy{margin-top:10px;background:var(--copper);min-width:150px}
+    .copy:hover{background:#7d3c2d}
+    .mini-card{background:#FBFDFD;border:1px solid var(--line);border-radius:14px;padding:18px;min-height:142px;box-shadow:0 2px 8px rgba(45,83,90,.04)}
+    .footer{margin-top:34px;padding:24px;border-radius:var(--radius);background:var(--primary);color:#F4FBFA;box-shadow:var(--shadow)}
+    .footer small{color:#D8EAEA}
+
+    @media(max-width:1100px){.card.third,.card.half{grid-column:1/-1}}
+    @media(max-width:640px){header{padding:24px 18px 34px}main{padding:18px}.nav-btn,button{width:100%;min-width:0}.prompt-structure span{width:100%}.arrow{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-buttons" aria-label="Primary navigation">
+      <a class="nav-btn" href="index.html">Home</a>
+      <a class="nav-btn" href="learning-experience-design.html">Learning Design</a>
+      <a class="nav-btn" href="change-adoption.html">Change Adoption</a>
+      <a class="nav-btn" href="idea-space.html">Idea Space</a>
+      <a class="nav-btn" href="executive-coaching-final.html">Executive Coaching</a>
+      <a class="nav-btn active copper" href="prompt-library.html">Prompt Library</a>
+      <a class="nav-btn qrg" href="qrg.html">QRG</a>
+    </div>
+    <span class="eyebrow">Work Smarter Hub</span>
+    <h1>Prompt Library</h1>
+    <p class="subtitle">Reusable prompt recipes for better thinking, better work and better judgment across learning design, change adoption, coaching, idea-building and responsible AI review.</p>
+    <div class="tagline">AI accelerates the work. Human judgment owns the outcome.</div>
+  </header>
+
+  <main>
+    <section class="card featured">
+      <span class="pill copper">How to use this library</span>
+      <h2 style="margin-top:0">Use prompts as starting points, not scripts</h2>
+      <p>Replace bracketed text with your task, audience, source material, output format and review criteria. The best prompt library is not only a list of prompts — it includes context, expected output and human review.</p>
+      <div class="prompt-structure" aria-label="Prompt structure flow">
+        <span>Role</span><b class="arrow">→</b>
+        <span>Context</span><b class="arrow">→</b>
+        <span>Task</span><b class="arrow">→</b>
+        <span>Source</span><b class="arrow">→</b>
+        <span>Output</span><b class="arrow">→</b>
+        <span>Constraints</span><b class="arrow">→</b>
+        <span>Review</span>
+      </div>
+      <div class="quickNav">
+        <a href="#prompt-coach">Prompt Coach</a>
+        <a href="#learning-design">Learning Design</a>
+        <a href="#change-adoption">Change Adoption</a>
+        <a href="#executive-coaching">Executive Coaching</a>
+        <a href="#idea-space">Idea Space</a>
+        <a href="#judgment">Self-check Coach</a>
+        <a href="#responsible-ai">Responsible AI</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Prompt Quality Checklist</h2>
+      <div class="grid">
+        <div class="card third"><span class="pill">Role</span><h3>Who should AI act as?</h3><p>Specify the role, perspective or expertise you want the output to reflect.</p></div>
+        <div class="card third"><span class="pill green">Context</span><h3>What is the situation?</h3><p>Explain audience, purpose, background, source material and what success looks like.</p></div>
+        <div class="card third"><span class="pill orange">Review</span><h3>What must humans verify?</h3><p>Check accuracy, confidentiality, tone, brand fit, practicality and judgment before using outputs.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="prompt-coach">
+      <h2>1. Prompt Coach Prompts</h2>
+      <p class="sectionIntro">Use these when you have a rough request and want to convert it into a clearer, more useful prompt.</p>
+
+      <details open>
+        <summary>Create a stronger version of my prompt</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when you have a rough prompt but need a clearer, more specific version.</div>
+          <div class="prompt"><pre id="pc1">Act as a GenAI Prompt Coach.
+
+I will share a rough prompt. Improve it so that it is clearer, more specific, and more likely to produce a useful output.
+
+Before rewriting, identify:
+1. What is unclear
+2. What context is missing
+3. What output format should be specified
+4. What risks or assumptions should be managed
+
+Then provide:
+- Improved prompt
+- Why it is better
+- Optional follow-up prompts I can use
+
+Rough prompt:
+[Paste rough prompt here]</pre></div>
+          <button class="copy" onclick="copyPrompt('pc1', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Ask me questions before creating the prompt</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when the task is important and the context needs to be clarified first.</div>
+          <div class="prompt"><pre id="pc2">Act as my prompt design partner.
+
+I want to create a prompt for the following task:
+[Insert task]
+
+Do not create the final prompt immediately. First ask me up to 7 targeted questions to understand:
+- Audience
+- Purpose
+- Source material
+- Desired output
+- Tone
+- Constraints
+- Review criteria
+
+After I answer, create a polished prompt I can copy and use.</pre></div>
+          <button class="copy" onclick="copyPrompt('pc2', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Convert my vague request into a usable prompt</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when you know what you want but cannot yet phrase it clearly.</div>
+          <div class="prompt"><pre id="pc3">I am going to describe what I need in plain language. Convert it into a structured prompt.
+
+My rough need is:
+[Insert rough need]
+
+Create the final prompt using this structure:
+1. Role you should play
+2. Context
+3. Task
+4. Source material to use
+5. Output format
+6. Quality expectations
+7. Questions to ask if anything is unclear</pre></div>
+          <button class="copy" onclick="copyPrompt('pc3', this)">Copy Prompt</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="learning-design">
+      <h2>2. Learning Design Prompts</h2>
+      <p class="sectionIntro">Use these when converting SME content, stakeholder inputs or training requests into capability-building learning experiences.</p>
+
+      <details open>
+        <summary>Analyze capability gaps</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when reviewing SME interviews, project requests or stakeholder inputs.</div>
+          <div class="prompt"><pre id="ld1">Act as a Senior Learning Experience Designer.
+
+Review the supplied material and identify:
+1. Business problem
+2. Current performance expectation
+3. Desired performance expectation
+4. Capability gaps
+5. Required knowledge
+6. Required skills
+7. Desired behaviours
+8. Learning objectives
+9. Success metrics
+10. Missing information
+
+Source material:
+[Paste source material here]</pre></div>
+          <button class="copy" onclick="copyPrompt('ld1', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Convert SME notes to learning objectives</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when SME content is not yet learner-ready.</div>
+          <div class="prompt"><pre id="ld2">Act as an Instructional Designer.
+
+Convert the SME notes below into:
+1. Course goal
+2. Measurable learning objectives
+3. Knowledge outcomes
+4. Skill outcomes
+5. Behaviour outcomes
+6. Practice activities
+7. Assessment ideas
+8. Job aid or performance support ideas
+9. SME questions to clarify
+
+SME notes:
+[Paste SME notes here]</pre></div>
+          <button class="copy" onclick="copyPrompt('ld2', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Root cause analysis before recommending training</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use before recommending training as the solution.</div>
+          <div class="prompt"><pre id="ld3">Act as an Organizational Development and Learning Consultant.
+
+Analyze whether the performance issue below is caused by:
+- Knowledge gap
+- Skill gap
+- Process issue
+- Tool or technology issue
+- Leadership or manager support issue
+- Incentive or priority conflict
+- Culture or confidence barrier
+- Communication gap
+
+Then recommend whether the solution should be:
+- Training
+- Job aid
+- Workflow redesign
+- Manager reinforcement
+- Communication
+- Coaching
+- Governance or process change
+
+Situation:
+[Paste situation here]</pre></div>
+          <button class="copy" onclick="copyPrompt('ld3', this)">Copy Prompt</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="change-adoption">
+      <h2>3. Change Adoption Prompts</h2>
+      <p class="sectionIntro">Use these to diagnose adoption barriers, design interventions and measure whether behaviour is changing.</p>
+
+      <details open>
+        <summary>AI adoption barrier analysis</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when adoption is low or people are hesitant to use a new tool or way of working.</div>
+          <div class="prompt"><pre id="ca1">Act as an AI adoption and change consultant.
+
+Analyze the situation below across:
+1. Awareness
+2. Desire
+3. Capability
+4. Confidence
+5. Workflow friction
+6. Trust and accuracy concerns
+7. Responsible-use concerns
+8. Manager support
+9. Reinforcement
+10. Measurement
+
+Recommend the smallest useful intervention to test first.
+
+Situation:
+[Paste situation here]</pre></div>
+          <button class="copy" onclick="copyPrompt('ca1', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Workflow support designer</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when you want embedded support before suggesting training.</div>
+          <div class="prompt"><pre id="ca2">Act as a workflow and performance support designer.
+
+Review this workflow:
+[Paste workflow]
+
+Identify:
+1. Moments of need
+2. Friction points
+3. Decision points
+4. Opportunities for decision scaffolding
+5. Opportunities for prompts
+6. Opportunities for nudges
+7. Opportunities for job aids
+8. Human review checkpoints
+
+Recommend embedded supports before recommending a training programme.</pre></div>
+          <button class="copy" onclick="copyPrompt('ca2', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Behaviour change analysis</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when transforming a change initiative into observable behaviours.</div>
+          <div class="prompt"><pre id="ca3">Act as a behaviour change consultant.
+
+For this change initiative:
+[Insert initiative]
+
+Describe:
+1. Current behaviour
+2. Target behaviour
+3. What people must start doing
+4. What people must stop doing
+5. What people must do differently
+6. Barriers
+7. Motivators
+8. Reinforcement mechanisms
+9. Manager actions
+10. Success metrics</pre></div>
+          <button class="copy" onclick="copyPrompt('ca3', this)">Copy Prompt</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="executive-coaching">
+      <h2>4. Executive Coaching Prompts</h2>
+      <p class="sectionIntro">Use these for reflective leadership conversations, decision quality, identity shifts and coaching preparation.</p>
+
+      <details open>
+        <summary>Leadership reflection builder</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when preparing reflective coaching questions.</div>
+          <div class="prompt"><pre id="ec1">Act as an executive coach.
+
+Create reflective coaching questions focused on:
+- Leadership effectiveness
+- Influence
+- Confidence
+- Stakeholder management
+- Decision quality
+- Behaviour change
+
+Context:
+[Paste context here]
+
+Create 12 questions. Keep the questions warm, direct and non-judgmental.</pre></div>
+          <button class="copy" onclick="copyPrompt('ec1', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Decision quality coach</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use before a high-stakes recommendation or decision.</div>
+          <div class="prompt"><pre id="ec2">Act as a decision quality coach.
+
+Review the scenario below and separate:
+- Facts
+- Assumptions
+- Emotions or preferences
+- Risks
+- Options
+- Trade-offs
+- Stakeholder impact
+
+Then identify reflection questions I should consider before deciding.
+
+Scenario:
+[Paste scenario here]</pre></div>
+          <button class="copy" onclick="copyPrompt('ec2', this)">Copy Prompt</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="idea-space">
+      <h2>5. Idea Space Prompts</h2>
+      <p class="sectionIntro">Use these when turning observations, rough ideas or personal reflections into frameworks, articles or models.</p>
+
+      <details open>
+        <summary>Framework builder</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when you want to turn observations into a reusable model.</div>
+          <div class="prompt"><pre id="is1">Act as a thought partner and systems thinker.
+
+Review the ideas below and identify:
+- Recurring themes
+- Patterns
+- Tensions
+- Contradictions
+- Opportunities
+
+Create a framework with:
+1. Framework name
+2. Core idea
+3. Components
+4. Relationships between components
+5. Practical application
+6. Example use case
+7. Possible visual structure
+
+Ideas:
+[Paste ideas here]</pre></div>
+          <button class="copy" onclick="copyPrompt('is1', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>LinkedIn article builder</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when turning an idea into a professional post or article.</div>
+          <div class="prompt"><pre id="is2">Act as a LinkedIn article writing partner for a learning, change and workforce transformation professional.
+
+Idea:
+[Insert idea]
+
+Audience:
+[Insert audience]
+
+Create an article structure with:
+1. Hook
+2. Why this matters now
+3. Personal observation
+4. Practical workplace example
+5. Framework or model
+6. Takeaways
+7. Reflective closing
+
+Avoid generic AI commentary. Focus on human capability, judgment, learning, adoption and change.</pre></div>
+          <button class="copy" onclick="copyPrompt('is2', this)">Copy Prompt</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="judgment">
+      <h2>6. Betty's Self-check Coach</h2>
+      <p class="sectionIntro">Use this section when the output may be persuasive but still needs human discernment.</p>
+      <div class="grid">
+        <div class="card half"><span class="pill copper">Before using AI output</span><h3>Ask better questions</h3><ul><li>What problem am I actually solving?</li><li>What evidence do I have?</li><li>What assumptions am I making?</li><li>What would a skeptic say?</li><li>What behaviour am I trying to change?</li><li>How will I know if it worked?</li></ul></div>
+        <div class="card half"><span class="pill green">Quality check</span><h3>Do not skip human review</h3><ul><li>Is this accurate?</li><li>Is this safe to share?</li><li>Is this useful for the audience?</li><li>Is the tone right?</li><li>What would I change before using it?</li><li>What should remain human-owned?</li></ul></div>
+      </div>
+
+      <details>
+        <summary>Challenge my assumptions</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use before important decisions or recommendations.</div>
+          <div class="prompt"><pre id="jc1">Do not optimize for agreement.
+
+Challenge my assumptions and identify:
+1. Risks
+2. Blind spots
+3. Counterarguments
+4. Unintended consequences
+5. Evidence I may be missing
+6. Stakeholders I may not have considered
+7. Conditions under which my recommendation would fail
+
+My current thinking:
+[Paste your thinking here]</pre></div>
+          <button class="copy" onclick="copyPrompt('jc1', this)">Copy Prompt</button>
+        </div>
+      </details>
+
+      <details>
+        <summary>Blank slate analysis</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when you want independent thinking without bias from prior context.</div>
+          <div class="prompt"><pre id="jc2">Use only the information contained in this prompt. Ignore prior context unless explicitly requested.
+
+Analyze the issue using first principles.
+Identify:
+1. Facts
+2. Assumptions
+3. Constraints
+4. Unknowns
+5. Options
+6. Risks
+7. Opportunities
+8. Recommended next questions
+
+Issue:
+[Paste issue here]</pre></div>
+          <button class="copy" onclick="copyPrompt('jc2', this)">Copy Prompt</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="responsible-ai">
+      <h2>7. Responsible AI Review</h2>
+      <p class="sectionIntro">Use this before sharing outputs, using sensitive material, or turning AI outputs into stakeholder-facing communication.</p>
+
+      <details open>
+        <summary>Responsible AI review checklist</summary>
+        <div class="details-inner">
+          <div class="context"><strong>Context:</strong> Use when reviewing an AI-generated draft, analysis or recommendation.</div>
+          <div class="prompt"><pre id="ra1">Act as a Responsible AI and quality reviewer.
+
+Review the output below for:
+1. Accuracy
+2. Unsupported claims
+3. Confidentiality risk
+4. Sensitive data exposure
+5. Bias or unfair assumptions
+6. Tone and audience fit
+7. Missing context
+8. Overconfidence
+9. Need for human review
+10. Practical usefulness
+
+Then provide:
+- What is safe to use
+- What needs revision
+- What needs verification
+- What should not be used as-is
+
+AI output:
+[Paste output here]</pre></div>
+          <button class="copy" onclick="copyPrompt('ra1', this)">Copy Prompt</button>
+        </div>
+      </details>
+    </section>
+
+    <footer class="footer">
+      <strong>Prompt Library</strong><br />
+      Prompt Coach • Learning Design • Change Adoption • Executive Coaching • Idea Space • Self-check Coach • Responsible AI Review<br /><br />
+      <small>Part of Betty's Work Smarter Hub. Prompts are starting points. Human judgment owns the context, decision, quality and accountability.</small>
+    </footer>
+  </main>
+
+  <script>
+    function copyPrompt(id, btn){
+      const text=document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(()=>{
+        const old=btn.innerText;
+        btn.innerText='Copied!';
+        setTimeout(()=>btn.innerText=old,1200);
+      });
+    }
+  </script>
+</body>
+</html>
